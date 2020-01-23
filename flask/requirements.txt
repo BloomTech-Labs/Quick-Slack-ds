@@ -46,6 +46,8 @@ wtforms == 2.2.1
 # quickslack\routes\dashboard\forms.py: 2
 wtforms-components == 0.10.4
 
+slackclient
+
 # not found by pigar
 gunicorn
 psycopg2-binary

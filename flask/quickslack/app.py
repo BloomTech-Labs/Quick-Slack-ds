@@ -21,7 +21,7 @@ import logging, logging.config
 logging.config.fileConfig('config/logging.conf')
 
 CELERY_TASK_LIST = [
-    'quickslack.tasks.example',
+    'quickslack.tasks.model_tasks',
 ]
 
 def create_celery_app(app=None):
