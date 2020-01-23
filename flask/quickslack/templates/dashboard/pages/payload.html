@@ -1,0 +1,11 @@
+{% extends 'dashboard/content.html' %}
+
+{% block Payload %}
+    <ol>
+        {% for data in payload %}
+            <li>
+                {{ data }}
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock %}

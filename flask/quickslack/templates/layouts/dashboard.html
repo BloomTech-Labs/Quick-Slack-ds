@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% include 'dashboard/components/navbar.html' %}
+
+{% block flash_messages %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor%}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block logs %}
+
+    {% if include_logs %}
+        <ol>
+            {% for line in log_file %}
+                <li>{{ line }}</li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+{% endblock %}
