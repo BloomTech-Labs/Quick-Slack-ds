@@ -3,7 +3,6 @@ from flask import Flask, jsonify, request
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 import torch
 import torch.nn.functional as F
-from tqdm import trange
 import time
 from .utils.torch import top_k_top_p_filtering
 
@@ -31,7 +30,7 @@ def create_app():
         context = context.unsqueeze(0).repeat(num_samples, 1)
         generated = context
         with torch.no_grad():
-            for _ in trange(length):
+            for _ in range(length):
                 inputs = {"input_ids": generated}
                 outputs = model(**inputs)
                 next_token_logits = outputs[0][0, -1, :] / (temperature if temperature > 0 else 1.0)

@@ -3,21 +3,27 @@ services:
 
     flask:
         build: ./flask
-        command: gunicorn -c "python:config.gunicorn" --reload "quickslack.app:create_app()"
+        command: sleep 1 && flask db upgrade && gunicorn -c "python:config.gunicorn" --reload "quickslack.app:create_app()"
         container_name: flask
         restart: unless-stopped
-        env_file:
-            - ./.env
         volumes:
             - './flask:/flask'
 
     redis:
         image: redis:3.0-alpine
-        container_name: redis
         command: redis-server --requirepass devpassword
         restart: unless-stopped
         volumes:
             - 'redis:/var/lib/redis/data'
+            
+    celery:
+        build: ./flask
+        command: celery worker -l info -A quickslack.CELERY
+        restart: unless-stopped
+        env_file:
+            - ./.env
+        volumes:
+            - './flask:/flask'
 
     # beat:
     #     build: ./flask
@@ -31,21 +37,15 @@ services:
 
     task-monitor:
         build: ./flask
-        container_name: task-monitor
         entrypoint: flower
         command: -A quickslack.CELERY
         restart: unless-stopped
-        env_file:
-            - ./.env
         volumes:
             - './flask:/flask'
 
     postgres:
         image: postgres:latest
-        container_name: postgres
         restart: unless-stopped
-        env_file:
-            - ./.env
         volumes:
             - postgres:/var/lib/postgresql/data
 
