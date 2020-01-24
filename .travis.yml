@@ -20,6 +20,7 @@ before_install:
   - chmod 600 $SSH_KEYFILE
   - mkdir ~/.docker
   - echo "{\"auths\":{\"https://index.docker.io/v1/\":{\"auth\":\"$CI_REGISTRY_AUTH\"}}}" > ~/.docker/config.json
+  - export COMPOSE_FILE=docker-compose.yml:docker-compose.build.yml
 #trigger build 2
 branches:
   only:
