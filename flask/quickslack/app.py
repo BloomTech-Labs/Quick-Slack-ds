@@ -11,6 +11,7 @@ from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 from quickslack.routes.dashboard.views import dashboard
 from quickslack.routes.api.slackevents import slackevents
+from quickslack.routes.api.slash import slash
 from quickslack.sentry import integrate_sentry
 from quickslack.extensions import (
 	debug_toolbar,
@@ -47,8 +48,7 @@ def create_celery_app(app=None):
     return celery
 
 def create_app(settings_override=None):
-	integrate_sentry(FlaskIntegration)
-	# sentry()
+	sentry()
 
 	app = Flask(__name__, instance_relative_config=True)
 	app.config.from_object('config.flask')
@@ -56,6 +56,7 @@ def create_app(settings_override=None):
 	extensions(app)
 	app.register_blueprint(dashboard)
 	app.register_blueprint(slackevents)
+	app.register_blueprint(slash)
 
 	app.logger.info('Initializing Slack Client...')
 	app.config['slack'] = SlackClient(
@@ -84,10 +85,11 @@ def create_app(settings_override=None):
 
 	return app
 
-# def sentry():
-# 	integrate_sentry(CeleryIntegration)
-# 	integrate_sentry(RedisIntegration)
-# 	integrate_sentry(SqlalchemyIntegration)
+def sentry():
+	integrate_sentry(FlaskIntegration)
+	integrate_sentry(CeleryIntegration)
+	integrate_sentry(RedisIntegration)
+	integrate_sentry(SqlalchemyIntegration)
 
 
 def extensions(app):
