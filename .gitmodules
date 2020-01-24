@@ -1,3 +1,6 @@
 [submodule "notebook_server/notebooks"]
 	path = notebook_server/notebooks
 	url = git@github.com:quickslack/QS-Notebooks.git
+[submodule "Submod"]
+	url = https://github.com/quickslack/QS-Notebooks.git
+	branch = master
