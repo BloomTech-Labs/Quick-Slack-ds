@@ -8,31 +8,35 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
+from flask_migrate import Migrate
 
 from quickslack.routes.dashboard.views import dashboard
 from quickslack.routes.api.slackevents import slackevents
 from quickslack.routes.api.slash import slash
 from quickslack.sentry import integrate_sentry
 from quickslack.extensions import (
-	debug_toolbar,
-	db
+    debug_toolbar,
+    db
 )
+from .schemas import Message  # import one model to register migrations
 
-import logging, logging.config
+import logging
+import logging.config
 logging.config.fileConfig('config/logging.conf')
 
 CELERY_TASK_LIST = [
     'quickslack.tasks.model_tasks',
 ]
 
+
 def create_celery_app(app=None):
     app = app or create_app()
 
     celery = Celery(
-		app.import_name,
-		broker=app.config['CELERY_BROKER_URL'],
-		include=CELERY_TASK_LIST
-	)
+        app.import_name,
+        broker=app.config['CELERY_BROKER_URL'],
+        include=CELERY_TASK_LIST
+    )
 
     celery.conf.update(app.config)
     TaskBase = celery.Task
@@ -46,6 +50,7 @@ def create_celery_app(app=None):
 
     celery.Task = ContextTask
     return celery
+
 
 def create_app(settings_override=None):
 	sentry()
@@ -93,10 +98,10 @@ def sentry():
 
 
 def extensions(app):
-	app.logger = logging.getLogger('root')
+    app.logger = logging.getLogger('root')
 
-	debug_toolbar.init_app(app)
-	db.init_app(app)
+    debug_toolbar.init_app(app)
+    db.init_app(app)
 
-	app.logger.info('Extensions started...')
-	return None
+    app.logger.info('Extensions started...')
+    return None

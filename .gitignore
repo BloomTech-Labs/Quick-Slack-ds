@@ -147,3 +147,5 @@ tensorflow_serving/model_volume/models/distilgpt2/saved_model.pb
 .idea/
 .devcontainer/
 .vscode/
+
+db_backups

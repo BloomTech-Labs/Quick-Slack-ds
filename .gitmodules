@@ -1,0 +1,3 @@
+[submodule "notebook_server/notebooks"]
+	path = notebook_server/notebooks
+	url = https://github.com/quickslack/QS-Notebooks.git
