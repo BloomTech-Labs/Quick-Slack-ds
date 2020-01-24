@@ -1,0 +1,33 @@
+
+service: docker
+dist: bionic
+env:
+  - DOCKER_COMPOSE_VERSION=1.25.1
+addons:
+  apt:
+    packages:
+      - docker-ce
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - find . -name Dockerfile -exec sed -i -r 's/\-\-mount..[^ ]+\s//g' {} +
+  - find . -name Dockerfile -exec sed -i -r 's/#\ssyntax.+experimental//g' {} +
+  - export BUILD_TAG=$TRAVIS_BRANCH
+  - export SSH_KEYFILE=$(mktemp)
+  - echo "$CI_SSH_KEY" > $SSH_KEYFILE
+  - chmod 600 $SSH_KEYFILE
+  - mkdir ~/.docker
+  - echo "{\"auths\":{\"https://index.docker.io/v1/\":{\"auth\":\"$CI_REGISTRY_AUTH\"}}}" > ~/.docker/config.json
+#trigger build 2
+branches:
+  only:
+        - travis-test
+script:
+    #- "docker-compose config|grep image:|awk '{$1=$1};1'|cut -c 7-|xargs -t -L1 docker pull"
+    - docker-compose build
+    # retry push to fix bug: https://github.com/docker/compose/issues/6837
+    # push using docker if can't push using compose
+    - "docker-compose push||{ sleep 5 && docker-compose push; }||{ sleep 5 && docker-compose push; }|| docker-compose config|grep image:|awk '{$1=$1};1'|grep quickslack|cut -c 7-|xargs -t -L1 docker push"
+    - ssh -i $SSH_KEYFILE -o "StrictHostKeyChecking no" -t ubuntu@teststaging.somethingtechie.com "(echo 'sample2'>/home/ubuntu/iamhere2)"
