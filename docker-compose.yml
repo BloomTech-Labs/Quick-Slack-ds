@@ -3,8 +3,13 @@ services:
 
     flask:
         build: ./flask
-        command: gunicorn -c "python:config.gunicorn" --reload "quickslack.app:create_app()"
+        command: flask run --host=0.0.0.0 
+        #gunicorn -c "python:config.gunicorn" --reload "quickslack.app:create_app()"
         restart: unless-stopped
+        environment:
+            FLASK_RUN_PORT: 8000
+            FLASK_APP: "quickslack.APP"
+            FLASK_ENV: development
 
     redis:
         image: redis:3.0-alpine
