@@ -11,7 +11,7 @@ COPY requirements.txt requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
 
 COPY . .
-RUN useradd model
-RUN chown model:model .
+RUN useradd model -m
+RUN chown model:model . -R
 USER model
 CMD gunicorn -c "python:config.gunicorn" "api.app:create_app()"
