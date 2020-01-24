@@ -21,3 +21,10 @@ services:
     api:
         ports:
             - 8080:8080
+    notebook_server:
+        build: ./notebook_server
+        volumes:
+            - './notebook_server/notebooks:/notebooks'
+        command: jupyter lab
+        ports:
+            - 8888:8888
