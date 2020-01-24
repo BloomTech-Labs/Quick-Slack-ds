@@ -2,5 +2,5 @@ version: '3.7'
 services:
   flask:
     image: quickslack/webapp:${BUILD_TAG}
-  model:
+  api:
     image: quickslack/modelapi:${BUILD_TAG}

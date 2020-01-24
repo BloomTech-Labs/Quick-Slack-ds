@@ -6,16 +6,12 @@ services:
         command: gunicorn -c "python:config.gunicorn" --reload "quickslack.app:create_app()"
         container_name: flask
         restart: unless-stopped
-        volumes:
-            - './flask:/flask'
 
     redis:
         image: redis:3.0-alpine
         container_name: redis
         command: redis-server --requirepass devpassword
         restart: unless-stopped
-        volumes:
-            - 'redis:/var/lib/redis/data'
             
     task-monitor:
         build: ./flask
@@ -23,24 +19,14 @@ services:
         entrypoint: flower
         command: -A quickslack.CELERY
         restart: unless-stopped
-        volumes:
-            - './flask:/flask'
 
     postgres:
         image: postgres:latest
         container_name: postgres
         restart: unless-stopped
-        volumes:
-            - postgres:/var/lib/postgresql/data
 
     api:
         container_name: model
         restart: unless-stopped
         build: './model'
         command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()"
-        volumes:
-            - './model:/api'
-
-volumes:
-    postgres:
-    redis:
