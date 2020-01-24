@@ -70,7 +70,7 @@ def create_app(settings_override=None):
         config('SLACK_WORKSPACE_URL')
     )
     app.logger.info('Logging into Slack...')
-    app.config['slack'].login()
+    # app.config['slack'].login()
 
     @app.route('/')
     def index():

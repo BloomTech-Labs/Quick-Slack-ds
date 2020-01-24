@@ -17,7 +17,7 @@ services:
       - traefik-public
     ports:
       - 8080:8080
-  model:
+  api:
     image: quickslack/modelapi:${BUILD_TAG}
     deploy:
       labels:
@@ -32,5 +32,22 @@ services:
     networks:
       - net
       - traefik-public
-    task-monitor:
+    ports:
+      - 8080:8080
+  task-monitor:
       image: quickslack/webapp:${BUILD_TAG}
+      networks:
+        - net
+  redis:
+    networks: 
+      - net
+  postgres:
+    networks: 
+      - net
+networks:
+  net:
+    driver: overlay
+    attachable: true
+  traefik-public:
+    external: true
+    

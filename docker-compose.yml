@@ -4,25 +4,21 @@ services:
     flask:
         build: ./flask
         command: gunicorn -c "python:config.gunicorn" --reload "quickslack.app:create_app()"
-        container_name: flask
         restart: unless-stopped
 
     redis:
         image: redis:3.0-alpine
-        container_name: redis
         command: redis-server --requirepass devpassword
         restart: unless-stopped
             
     task-monitor:
         build: ./flask
-        container_name: task-monitor
         entrypoint: flower
         command: -A quickslack.CELERY
         restart: unless-stopped
 
     postgres:
         image: postgres:latest
-        container_name: postgres
         restart: unless-stopped
 
     api:
