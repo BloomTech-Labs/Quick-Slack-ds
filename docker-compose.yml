@@ -37,7 +37,7 @@ services:
         image: postgres:latest
         restart: unless-stopped
         volumes:
-            - postgres:/var/lib/postgresql/data
+            - ./database:/database
 
     api:
         container_name: model
