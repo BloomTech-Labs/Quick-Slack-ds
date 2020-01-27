@@ -1,5 +1,7 @@
 version: '3.7'
 services:
+  celery:
+    image: quickslack/webapp:${BUILD_TAG}
   flask:
     image: quickslack/webapp:${BUILD_TAG}
     deploy:
@@ -16,28 +18,41 @@ services:
       - net
       - traefik-public
     ports:
-      - 8080:8080
+      - published: 8000
+    environment: 
+      FLASK_APP: "quickslack:APP"
+      SLACK_EMAIL: ${SLACK_EMAIL}
+      SLACK_PASSWORD: ${SLACK_PASSWORD}
+      SLACK_WORKSPACE: ${SLACK_WORKSPACE_URL}
+      SLACK_TOKEN: ${SLACK_TOKEN}
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_SERVICE: ${DB_SERVICE}
   api:
     image: quickslack/modelapi:${BUILD_TAG}
-    deploy:
+    networks:
+      - net
+    ports:
+      - 8080:8080
+  task-monitor:
+      image: quickslack/webapp:${BUILD_TAG}
       labels:
-        - traefik.frontend.rule=Host:webapp.${BUILD_TAG}.qs.somethingtechie.com
+        - traefik.frontend.rule=Host:flower.${BUILD_TAG}.qs.somethingtechie.com
         - traefik.enable=true
-        - traefik.port=8080
+        - traefik.port=5555
         - traefik.tags=traefik-public
         - traefik.docker.network=traefik-public
         - traefik.redirectorservice.frontend.entryPoints=http
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
-    networks:
-      - net
-      - traefik-public
-    ports:
-      - 8080:8080
-  task-monitor:
-      image: quickslack/webapp:${BUILD_TAG}
+      ports: 
+        - published: 5555
+
       networks:
         - net
+        - traefik-public
   redis:
     networks: 
       - net
