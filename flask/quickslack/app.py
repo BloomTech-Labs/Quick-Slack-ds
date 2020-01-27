@@ -56,6 +56,7 @@ def create_app(settings_override=None):
 	sentry()
 
 	app = Flask(__name__, instance_relative_config=True)
+	Migrate(app, db)
 	app.config.from_object('config.flask')
 
 	extensions(app)

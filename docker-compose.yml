@@ -3,7 +3,7 @@ services:
 
     flask:
         build: ./flask
-        command: sleep 1 && flask db upgrade && gunicorn -c "python:config.gunicorn" --reload "quickslack.app:create_app()"
+        command: bash -c 'flask db upgrade && gunicorn -c "python:config.gunicorn" --reload "quickslack:APP"'
         container_name: flask
         restart: unless-stopped
         volumes:
@@ -18,22 +18,12 @@ services:
             
     celery:
         build: ./flask
-        command: celery worker -l info -A quickslack.CELERY
+        command: celery worker -B -l info -A quickslack.CELERY
         restart: unless-stopped
         env_file:
             - ./.env
         volumes:
             - './flask:/flask'
-
-    # beat:
-    #     build: ./flask
-    #     container_name: beat
-    #     command: celery worker -B -l info -A quickslack.CELERY
-    #     restart: unless-stopped
-    #     env_file:
-    #         - ./.env
-    #     volumes:
-    #         - './flask:/flask'
 
     task-monitor:
         build: ./flask
@@ -53,7 +43,7 @@ services:
         container_name: model
         restart: unless-stopped
         build: './model'
-        command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()"
+        command: gunicorn -c "python:config.gunicorn" --reload "api:APP"
         volumes:
             - './model:/api'
 

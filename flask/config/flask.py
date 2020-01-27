@@ -19,10 +19,10 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_REDIS_MAX_CONNECTIONS = 5
 CELERYBEAT_SCHEDULE = {
-    'task_name': {
-        'task': 'quickslack.tasks.example.first_task',
-        'schedule': 30.0
-    },
+    # 'task_name': {
+    #     'task': 'quickslack.tasks.example.first_task',
+    #     'schedule': 30.0
+    # },
 }
 
 DB_NAME = config('DB_NAME')
