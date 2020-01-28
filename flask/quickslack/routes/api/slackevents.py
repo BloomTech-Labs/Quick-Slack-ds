@@ -6,20 +6,28 @@ slackevents = Blueprint('slackevents', __name__)
 
 @slackevents.route('/slackevents', methods=['GET', 'POST'])
 def recieve():
-    print('event incoming')
+    print('incoming event')
+    content = request.get_json(silent=True)
+    payload={}
+    print(content)
+
     try:
-        content = request.get_json(silent=True)
-        print(content)
-    except Exception as e:
-        return jsonify(e)
+        print('get event data')
+        event_type = content['event']['type']
+        print(event_type)
 
-    input_text = content['event']['text'].replace("<@UT1EE1GQM> ", "")
-    channel = content['event']['channel']
+        if event_type == 'app_mention':
+            print('Its an app mention')
 
-    print(input_text, channel)
+            payload['thread_ts'] = content['event']['thread_ts']
+            payload['event_ts'] = content['event']['event_ts']
 
-    print('starting celery')
-    from quickslack.tasks.model_tasks import send_pred_task
-    send_pred_task.delay(input_text, channel)
+            payload['input_text'] = content['event']['text'].replace("<@UT1EE1GQM> ", "")
+            payload['channel'] = content['event']['channel']
 
-    return jsonify({"success": True})
+            print('Starting celery')
+            from quickslack.tasks.model_tasks import send_pred_task
+            send_pred_task.delay(payload)
+    except: print('ERROR')
+
+    return jsonify(content)

@@ -27,3 +27,40 @@
         "event_time": 1579806000,
         "authed_users": ["UT1EE1GQM"]
 }
+
+{
+    "token": "Ps7usci2WZoklKEpo68cC142",
+    "team_id": "TT1C3GSBH",
+    "api_app_id": "ASNLB6PQA",
+    "event": {
+        "client_msg_id": "7daf3030-a7ac-42ae-8821-aa5c71c4fce2",
+        "type": "app_mention",
+        "text": "<@UT1EE1GQM> I posted this in a thread",
+        "user": "USPAUPERF",
+        "ts": "1580151734.001700",
+        "team": "TT1C3GSBH",
+        "blocks": [{
+            "type": "rich_text",
+            "block_id": "=n5/w",
+            "elements": [{
+                "type": "rich_text_section",
+                "elements": [{
+                    "type": "user",
+                    "user_id": "UT1EE1GQM"
+                }, {
+                    "type": "text",
+                    "text": " I posted this in a thread"
+                }]
+            }]
+        }],
+        "thread_ts": "1580151662.001400",
+        "parent_user_id": "USPAUPERF",
+        "channel": "CSLNH85D0",
+        "event_ts": "1580151734.001700"
+    },
+    "type": "event_callback",
+    "event_id": "EvSVRHSE7K",
+    "event_time": 1580151734,
+    "authed_users": ["UT1EE1GQM"]
+}
+    
