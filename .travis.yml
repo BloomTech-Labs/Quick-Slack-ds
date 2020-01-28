@@ -35,6 +35,6 @@ script:
     # push using docker if can't push using compose
     - "docker-compose push||{ sleep 5 && docker-compose push; }||{ sleep 5 && docker-compose push; }|| docker-compose config|grep image:|awk '{$1=$1};1'|grep quickslack|cut -c 7-|xargs -t -L1 docker push"
     - docker-compose -f docker-compose.yml -f docker-compose.deploy.yml config --no-interpolate > $SWARM_CONFIG
-    - scp -i $SSH_KEYFILE -o "StrictHostKeyChecking=no" $SWARM_CONFIG "ubuntu@teststagint.somethingtechie.com:/home/ubuntu/stacks/${BUILD_TAG}"
-    - ssh -i $SSH_KEYFILE -o "StrictHostKeyChecking no" -t ubuntu@teststaging.somethingtechie.com "(echo 'sample2'>/home/ubuntu/iamhere2)"\
+    - scp -i ${SSH_KEYFILE} -o "StrictHostKeyChecking=no" ${SWARM_CONFIG} "ubuntu@teststagint.somethingtechie.com:/home/ubuntu/stacks/${BUILD_TAG}"
+    - ssh -i ${SSH_KEYFILE} -o "StrictHostKeyChecking no" -t ubuntu@teststaging.somethingtechie.com "(echo 'sample2'>/home/ubuntu/iamhere2)"\
     - make deploy

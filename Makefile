@@ -1,5 +1,5 @@
 deploy:
-	@ssh -i -i ${SSH_KEYFILE} -o "StrictHostKeyChecking=no" -t ubuntu@teststaging.somethingtechie.com "(\
+	@ssh -i ${SSH_KEYFILE} -o "StrictHostKeyChecking=no" -t ubuntu@teststaging.somethingtechie.com "(\
           export DB_NAME=${DB_NAME};\
           export DB_PASS=${DB_PAS};\
           export DB_SERVICE=${DB_SERVICE};\
