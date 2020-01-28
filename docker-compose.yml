@@ -30,12 +30,13 @@ services:
         image: postgres:latest
         restart: unless-stopped
 
-    api:
-        container_name: model
+    model:
         restart: unless-stopped
         build: './model'
         command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()" --timeout 120 
-        
+    rasa:
+        build: './rasa_api'
+        command: rasa run --debug
 
 volumes:
     postgres:

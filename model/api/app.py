@@ -44,19 +44,17 @@ def sample_sequence(
                 (generated, next_token.unsqueeze(0)), dim=1)
     return generated
 
+tokenizer = GPT2Tokenizer.from_pretrained("distilgpt2")
+model = GPT2LMHeadModel.from_pretrained("distilgpt2")
+model.eval()
 
-def get_output(model, input_text, tokenizer):
+def get_output(input_text, model=model, tokenizer=tokenizer):
     indexed_tokens = tokenizer.encode(input_text)
     output = sample_sequence(
         model, num_words, indexed_tokens, device=device)
     return tokenizer.decode(
         output[0, 0:].tolist(), clean_up_tokenization_spaces=True, skip_special_tokens=True
     )
-
-
-tokenizer = GPT2Tokenizer.from_pretrained("distilgpt2")
-model = GPT2LMHeadModel.from_pretrained("distilgpt2")
-model.eval()
 
 
 def create_app():
@@ -66,14 +64,21 @@ def create_app():
     def predict():
         if request.method == 'POST':
             lines = request.get_json(force=True)
-            input_text = lines['input_text']
+            print(lines)
+            tracker = lines['tracker']
+            latest_message = tracker['latest_message']
+            input_text = latest_message['text']
             time_now = time.time()
-            output_text = get_output(model, input_text, tokenizer)
+            output_text = get_output(input_text)
+            # output_text = 'this is a canned response'
             time_to_predict = time.time() - time_now
+            output = output_text + ' TIME_TO_PREDICT:' + str(time_to_predict)
             return jsonify({
-                'input_text': input_text,
-                'output_text': output_text,
-                'prediction_time': time_to_predict
+                "text": output,
+                "buttons": [],
+                "image": None,
+                "elements": [],
+                "attachments": []
             })
 
     return app

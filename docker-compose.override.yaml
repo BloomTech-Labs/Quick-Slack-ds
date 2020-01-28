@@ -29,7 +29,7 @@ services:
             - 5555:5555
         volumes:
             - './flask:/flask'
-    api:
+    model:
         ports:
             - 8080:8080
         volumes:
@@ -37,8 +37,6 @@ services:
         environment: 
             FLASK_RUN_PORT: 8080
             FLASK_APP: "api:APP"
-        volumes:
-            - './model:/api'
     notebook_server:
         build: ./notebook_server
         volumes:
@@ -46,7 +44,11 @@ services:
         command: jupyter lab
         ports:
             - 8888:8888
-
+    rasa:
+        volumes:
+        - './rasa_api:/rasa_api'
+        ports:
+        - 5005:5005
 volumes:
     postgres:
     redis:
