@@ -4,3 +4,5 @@ services:
     image: quickslack/webapp:${BUILD_TAG}
   api:
     image: quickslack/modelapi:${BUILD_TAG}
+  rasa:
+    image: quickslack/rasa_api:${BUILD_TAG}

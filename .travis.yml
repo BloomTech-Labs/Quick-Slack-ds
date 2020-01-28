@@ -32,4 +32,4 @@ script:
     # retry push to fix bug: https://github.com/docker/compose/issues/6837
     # push using docker if can't push using compose
     - "docker-compose push||{ sleep 5 && docker-compose push; }||{ sleep 5 && docker-compose push; }|| docker-compose config|grep image:|awk '{$1=$1};1'|grep quickslack|cut -c 7-|xargs -t -L1 docker push"
-    - ssh -i $SSH_KEYFILE -o "StrictHostKeyChecking no" -t ubuntu@teststaging.somethingtechie.com "(echo 'sample2'>/home/ubuntu/iamhere2)"
+    - ssh -i $SSH_KEYFILE -o "StrictHostKeyChecking no" -t ubuntu@teststaging.somethingtechie.com "(echo 'sample2'>/home/ubuntu/iamhere2)"\

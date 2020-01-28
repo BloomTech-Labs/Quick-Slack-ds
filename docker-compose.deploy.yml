@@ -2,6 +2,24 @@ version: '3.7'
 services:
   celery:
     image: quickslack/webapp:${BUILD_TAG}
+  rasa:
+    image: quicslack/rasa_api:${BUILDTAG}
+    deploy:
+      labels:
+        - traefik.frontend.rule=Host:rasa_app.${BUILD_TAG}.qs.somethingtechie.com
+        - traefik.enable=true
+        - traefik.port=5005
+        - traefik.tags=traefik-public
+        - traefik.docker.network=traefik-public
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        - traefik.webservice.frontend.entryPoints=https
+    networks:
+      - net
+      - traefik-public
+    environment:
+      SLACK_TOKEN: ${SLACK_TOKEN}
+
   flask:
     image: quickslack/webapp:${BUILD_TAG}
     deploy:
