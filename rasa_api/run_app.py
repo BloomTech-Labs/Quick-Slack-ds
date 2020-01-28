@@ -17,7 +17,7 @@ print(agent.is_core_ready())
 print('---------------------------')
 
 input_channel = SlackInput(
-    'xoxb-919411570391-913877143553-0kLsiwwFSce7YoVDc5UOkoZD',
+    '',
     'random', slack_retry_reason_header='x-slack-retry-reason',
     slack_retry_number_header='x-slack-retry-num')
 
