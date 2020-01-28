@@ -37,6 +37,8 @@ services:
     rasa:
         build: './rasa_api'
         command: rasa run --debug
+        environment: 
+            SLACK_TOKEN: ${SLACK_TOKEN}
 
 volumes:
     postgres:
