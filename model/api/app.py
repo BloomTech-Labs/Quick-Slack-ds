@@ -68,6 +68,9 @@ def create_app():
             tracker = lines['tracker']
             latest_message = tracker['latest_message']
             input_text = latest_message['text']
+            events = tracker['events']
+            user_event = [e for e in events if e['event'] == 'user']
+            thread_ts = user_event[0].get('thread_ts') if user_event else None
             time_now = time.time()
             output_text = get_output(input_text)
             # output_text = 'this is a canned response'
@@ -78,7 +81,8 @@ def create_app():
                 "buttons": [],
                 "image": None,
                 "elements": [],
-                "attachments": []
+                "attachments": [],
+                "thread_ts": thread_ts
             })
 
     return app

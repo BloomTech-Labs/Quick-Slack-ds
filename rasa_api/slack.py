@@ -277,11 +277,6 @@ class SlackInput(InputChannel):
         failure conditions defined here:
         https://api.slack.com/events-api#failure_conditions
         """
-        print('---')
-        repr(request)
-        print(request.headers)
-        print(text)
-        print('yyyyy')
         retry_reason = request.headers.get(self.retry_reason_header)
         retry_count = request.headers.get(self.retry_num_header)
         if retry_count and retry_reason in self.errors_ignore_retry:
@@ -360,6 +355,5 @@ class SlackInput(InputChannel):
             return response.text("Bot message delivered")
 
         return slack_webhook
-
     def get_output_channel(self) -> OutputChannel:
         return SlackBot(self.slack_token, self.slack_channel)
