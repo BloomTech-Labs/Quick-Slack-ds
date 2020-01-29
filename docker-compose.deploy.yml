@@ -2,6 +2,8 @@ version: '3.7'
 services:
   celery:
     image: quickslack/webapp:${BUILD_TAG}
+    environment: 
+      SECRET_KEY: ${SECRET_KEY}
   rasa:
     image: quickslack/rasa_api:${BUILD_TAG}
     deploy:
