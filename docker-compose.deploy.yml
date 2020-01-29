@@ -46,6 +46,7 @@ services:
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
       DB_SERVICE: ${DB_SERVICE}
+      SECRET_KEY: ${SECRET_KEY}
   model:
     image: quickslack/modelapi:${BUILD_TAG}
     networks:
