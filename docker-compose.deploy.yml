@@ -3,7 +3,7 @@ services:
   celery:
     image: quickslack/webapp:${BUILD_TAG}
   rasa:
-    image: quicslack/rasa_api:${BUILDTAG}
+    image: quicslack/rasa_api:${BUILD_TAG}
     deploy:
       labels:
         - traefik.frontend.rule=Host:rasa_app.${BUILD_TAG}.qs.somethingtechie.com

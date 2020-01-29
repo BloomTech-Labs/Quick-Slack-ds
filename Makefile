@@ -10,4 +10,4 @@ deploy:
           export SLACK_TOKEN=${SLACK_TOKEN};\
           export BUILD_TAG=${BUILD_TAG};\
           export SENTRY_DSN=${SENTRY_DSN};\
-           docker stack deploy -c /home/ubuntu/stacks/${BUILD_TAG} ${BUILD_TAG})"
+          docker stack deploy -c /home/ubuntu/stacks/${BUILD_TAG} ${BUILD_TAG})"
