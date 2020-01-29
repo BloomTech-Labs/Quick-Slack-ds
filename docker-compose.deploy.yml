@@ -4,6 +4,10 @@ services:
     image: quickslack/webapp:${BUILD_TAG}
     environment: 
       SECRET_KEY: ${SECRET_KEY}
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
   rasa:
     image: quickslack/rasa_api:${BUILD_TAG}
     deploy:
@@ -66,6 +70,10 @@ services:
         - traefik.webservice.frontend.entryPoints=https
       environment: 
         SECRET_KEY: ${SECRET_KEY}
+        DB_NAME: ${DB_NAME}
+        DB_PASS: ${DB_PASS}
+        DB_PORT: ${DB_PORT}
+        DB_USER: ${DB_USER}
       networks:
         - net
         - traefik-public
