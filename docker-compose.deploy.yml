@@ -2,11 +2,17 @@ version: '3.7'
 services:
   celery:
     image: quickslack/webapp:${BUILD_TAG}
+    environment: 
+      SECRET_KEY: ${SECRET_KEY}
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
   rasa:
-    image: quicslack/rasa_api:${BUILD_TAG}
+    image: quickslack/rasa_api:${BUILD_TAG}
     deploy:
       labels:
-        - traefik.frontend.rule=Host:rasa_app.${BUILD_TAG}.qs.somethingtechie.com
+        - traefik.frontend.rule=Host:rasabot.${BUILD_TAG}.qs.somethingtechie.com
         - traefik.enable=true
         - traefik.port=5005
         - traefik.tags=traefik-public
@@ -62,6 +68,12 @@ services:
         - traefik.redirectorservice.frontend.entryPoints=http
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
+      environment: 
+        SECRET_KEY: ${SECRET_KEY}
+        DB_NAME: ${DB_NAME}
+        DB_PASS: ${DB_PASS}
+        DB_PORT: ${DB_PORT}
+        DB_USER: ${DB_USER}
       networks:
         - net
         - traefik-public
@@ -69,6 +81,11 @@ services:
     networks: 
       - net
   postgres:
+    environment: 
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
     networks: 
       - net
 networks:
