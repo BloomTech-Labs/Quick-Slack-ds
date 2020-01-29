@@ -32,7 +32,7 @@ services:
     model:
         restart: unless-stopped
         build: './model'
-        command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()" --timeout 120 
+        command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()" --timeout 600 
     rasa:
         build: './rasa_api'
         command: rasa run --debug
