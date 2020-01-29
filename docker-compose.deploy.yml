@@ -73,6 +73,11 @@ services:
     networks: 
       - net
   postgres:
+    environment: 
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
     networks: 
       - net
 networks:
