@@ -65,9 +65,6 @@ services:
         - traefik.redirectorservice.frontend.entryPoints=http
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
-      ports: 
-        - published: 5555
-
       networks:
         - net
         - traefik-public
