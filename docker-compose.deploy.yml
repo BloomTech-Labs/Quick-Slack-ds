@@ -65,7 +65,7 @@ services:
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
       environment: 
-        SECRET_KEY: ${SECRET_KEY
+        SECRET_KEY: ${SECRET_KEY}
       networks:
         - net
         - traefik-public
