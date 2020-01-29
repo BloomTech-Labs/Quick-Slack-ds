@@ -35,9 +35,7 @@ services:
     networks:
       - net
       - traefik-public
-    ports:
-      - published: 8000
-    environment: 
+    environment:
       FLASK_APP: "quickslack:APP"
       SLACK_EMAIL: ${SLACK_EMAIL}
       SLACK_PASSWORD: ${SLACK_PASSWORD}
@@ -48,7 +46,7 @@ services:
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
       DB_SERVICE: ${DB_SERVICE}
-  api:
+  model:
     image: quickslack/modelapi:${BUILD_TAG}
     networks:
       - net
