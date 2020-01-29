@@ -52,8 +52,6 @@ services:
     image: quickslack/modelapi:${BUILD_TAG}
     networks:
       - net
-    ports:
-      - 8080:8080
   task-monitor:
       image: quickslack/webapp:${BUILD_TAG}
       labels:
