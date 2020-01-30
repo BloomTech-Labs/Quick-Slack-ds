@@ -37,6 +37,7 @@ services:
         environment: 
             FLASK_RUN_PORT: 8080
             FLASK_APP: "api:APP"
+            SLACK_TOKEN: ${SLACK_TOKEN}
         volumes:
             - './model:/api'
     notebook_server:

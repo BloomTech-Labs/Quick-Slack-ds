@@ -5,6 +5,7 @@ import logging
 import json
 from sanic.request import Request
 from rasa.core.channels.channel import UserMessage, OutputChannel
+from sanic.response import HTTPResponse
 
 logger = logging.getLogger(__name__)
 
@@ -108,6 +109,56 @@ class SlackBotInput(SlackInput):
             logger.error(str(e), exc_info=True)
 
         return response.text("")
+    def blueprint(
+            self, on_new_message: Callable[[UserMessage], Awaitable[Any]]
+    ) -> Blueprint:
+        slack_webhook = Blueprint("slack_webhook", __name__)
+
+        @slack_webhook.route("/", methods=["GET"])
+        async def health(_: Request) -> HTTPResponse:
+            return response.json({"status": "ok"})
+
+        @slack_webhook.route("/webhook", methods=["GET", "POST"])
+        async def webhook(request: Request) -> HTTPResponse:
+            if request.form:
+                output = request.form
+                payload = json.loads(output["payload"][0])
+
+                if self._is_interactive_message(payload):
+                    sender_id = payload["user"]["id"]
+                    text = self._get_interactive_response(payload["actions"][0])
+                    if text is not None:
+                        metadata = self.get_metadata(request)
+                        return await self.process_message(
+                            request, on_new_message, text, sender_id, metadata
+                        )
+                    elif payload["actions"][0]["type"] == "button":
+                        # link buttons don't have "value", don't send their clicks to bot
+                        return response.text("User clicked link button")
+                return response.text(
+                    "The input message could not be processed.", status=500
+                )
+
+            elif request.json:
+                output = request.json
+                if "challenge" in output:
+                    return response.json(output.get("challenge"))
+
+                elif self._is_user_message(output):
+                    metadata = self.get_metadata(request)
+                    return await self.process_message(
+                        request,
+                        on_new_message,
+                        self._sanitize_user_message(
+                            output["event"]["text"], output["authed_users"]
+                        ),
+                        output.get("event").get("user"),
+                        metadata,
+                    )
+
+            return response.text("Bot message delivered")
+
+        return slack_webhook
 
     def get_output_channel(self, channel=None, thread_ts=None) -> OutputChannel:
         channel = channel or self.slack_channel
