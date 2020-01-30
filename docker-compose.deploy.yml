@@ -8,6 +8,7 @@ services:
       DB_PASS: ${DB_PASS}
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
+      DB_SERVICE: ${DB_SERVICE}
   rasa:
     image: quickslack/rasa_api:${BUILD_TAG}
     deploy:
@@ -74,6 +75,7 @@ services:
         DB_PASS: ${DB_PASS}
         DB_PORT: ${DB_PORT}
         DB_USER: ${DB_USER}
+        DB_SERVICE: ${DB_SERVICE}
       networks:
         - net
         - traefik-public
