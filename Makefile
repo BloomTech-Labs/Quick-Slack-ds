@@ -11,4 +11,5 @@ deploy:
           export SLACK_WORKSPACE_URL=${SLACK_WORKSPACE_URL};\
           export BUILD_TAG=${BUILD_TAG};\
           export SENTRY_DSN=${SENTRY_DSN};\
-          docker stack deploy -c /home/ubuntu/stacks/${BUILD_TAG} ${BUILD_TAG})"
+          docker stack deploy -c /home/ubuntu/stacks/${BUILD_TAG} ${BUILD_TAG});\
+          docker system prune -f"

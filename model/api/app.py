@@ -84,10 +84,9 @@ def create_app():
             channel = user_event[-1]['metadata'].get(
                 'channel') if user_event else None
             time_now = time.time()
-            # output_text = get_output(input_text)
-            # time.sleep(10)
+            output_text = get_output(input_text)
             # output_text = "Super Instant"
-            output_text = 'this is a canned response'
+            # output_text = 'this is a canned response'
             time_to_predict = time.time() - time_now
 
             output = output_text + ' TIME_TO_PREDICT:' + str(time_to_predict)

@@ -5,12 +5,9 @@ import logging
 import json
 from sanic.request import Request
 from rasa.core.channels.channel import UserMessage, OutputChannel
-<<<<<<< HEAD
 from sanic.response import HTTPResponse
-
-=======
 import aiojobs
->>>>>>> ede27c37634c2aa4d66059cfca15c460174e365a
+
 logger = logging.getLogger(__name__)
 
 
