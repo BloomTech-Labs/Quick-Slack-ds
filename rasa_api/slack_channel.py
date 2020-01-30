@@ -5,9 +5,9 @@ import logging
 import json
 from sanic.request import Request
 from rasa.core.channels.channel import UserMessage, OutputChannel
-
+import aiojobs
 logger = logging.getLogger(__name__)
-
+scheduler = await aiojobs.create_scheduler()
 
 class SlackBotOutput(SlackBot):
     @classmethod
@@ -48,6 +48,7 @@ class SlackBotInput(SlackInput):
 
     def __init__(self, *args, **kwargs):
         logger.info("Input Init")
+
         super().__init__(*args, **kwargs)
 
     def get_metadata(self, request: Request) -> Optional[Dict[Text, Any]]:
@@ -101,8 +102,8 @@ class SlackBotInput(SlackInput):
                 input_channel=self.name(),
                 metadata=metadata,
             )
-
-            await on_new_message(user_msg)
+            
+            await scheduler.spawn(on_new_message(user_msg))
         except Exception as e:
             logger.error(f"Exception when trying to handle message.{e}")
             logger.error(str(e), exc_info=True)
