@@ -7,7 +7,7 @@ from sanic.request import Request
 from rasa.core.channels.channel import UserMessage, OutputChannel
 import aiojobs
 logger = logging.getLogger(__name__)
-scheduler = await aiojobs.create_scheduler()
+
 
 class SlackBotOutput(SlackBot):
     @classmethod
@@ -102,7 +102,8 @@ class SlackBotInput(SlackInput):
                 input_channel=self.name(),
                 metadata=metadata,
             )
-            
+
+            scheduler = await aiojobs.create_scheduler()
             await scheduler.spawn(on_new_message(user_msg))
         except Exception as e:
             logger.error(f"Exception when trying to handle message.{e}")
