@@ -44,7 +44,7 @@ services:
         build: ./notebook_server
         volumes:
             - './notebook_server/notebooks:/notebooks'
-        command: jupyter lab
+        command: jupyter lab --ip=0.0.0.0
         ports:
             - 8888:8888
     rasa:

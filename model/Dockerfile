@@ -15,3 +15,4 @@ RUN useradd model -m
 RUN chown model:model . -R
 USER model
 CMD gunicorn -c "python:config.gunicorn" "api.app:create_app()"
+
