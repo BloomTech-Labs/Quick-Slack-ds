@@ -152,3 +152,7 @@ db_backups
 
 # large files (models)
 medium_ft.pkl
+GP2-pretrain-step-250.pkl
+
+# database
+database/

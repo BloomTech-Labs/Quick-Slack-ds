@@ -12,6 +12,7 @@ print('instantiated tokenizer...')
 model = GPT2LMHeadModel(gpt2_medium_config)
 print('starting to load model...')
 model.load_state_dict(torch.load("/api/api/medium_ft.pkl"), strict=False)
+# model.load_state_dict(torch.load("/api/api/GP2-pretrain-step-250.pkl"), strict=False)
 print('model loaded!!!!!')
 
 eos = [tokenizer.encoder["<|endoftext|>"]]
@@ -98,29 +99,29 @@ def create_app():
         if request.method == 'POST':
             lines = request.get_json(force=True)
             print(lines)
-            tracker = lines['tracker']
-            latest_message = tracker['latest_message']
-            input_text = latest_message['text']
-            events = tracker['events']
-            user_event = [e for e in events if e['event'] == 'user']
-            thread_ts = user_event[0].get('thread_ts') if user_event else None
-            # input_text = lines['input_text']
+            # tracker = lines['tracker']
+            # latest_message = tracker['latest_message']
+            # input_text = latest_message['text']
+            # events = tracker['events']
+            # user_event = [e for e in events if e['event'] == 'user']
+            # thread_ts = user_event[0].get('thread_ts') if user_event else None
+            input_text = lines['input_text']
             time_now = time.time()
             print('received text!!!!')
             print('starting inference......')
             output_text = get_output(input_text)
             time_to_predict = time.time() - time_now
             output = output_text + ' TIME_TO_PREDICT:' + str(time_to_predict)
-            return jsonify({
-                "text": output,
-                "buttons": [],
-                "image": None,
-                "elements": [],
-                "attachments": [],
-                "thread_ts": thread_ts
-            })
             # return jsonify({
-            #     'output_text': output
+            #     "text": output,
+            #     "buttons": [],
+            #     "image": None,
+            #     "elements": [],
+            #     "attachments": [],
+            #     "thread_ts": thread_ts
             # })
+            return jsonify({
+                'output_text': output
+            })
 
     return app
