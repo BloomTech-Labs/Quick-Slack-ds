@@ -2,7 +2,7 @@ version: '3.7'
 services:
   flask:
     image: quickslack/webapp:${BUILD_TAG}
-  api:
+  model:
     image: quickslack/modelapi:${BUILD_TAG}
   rasa:
     image: quickslack/rasa_api:${BUILD_TAG}
