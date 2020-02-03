@@ -17,6 +17,6 @@ COPY . .
 
 RUN pip install --editable .
 RUN useradd flask
-RUN chown flask:flask .
+RUN chown flask:flask . -R
 USER flask
 CMD gunicorn -c "python:config.gunicorn" "quickslack.app:create_app()"

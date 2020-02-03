@@ -1,0 +1,99 @@
+version: '3.7'
+services:
+  celery:
+    image: quickslack/webapp:${BUILD_TAG}
+    environment: 
+      SECRET_KEY: ${SECRET_KEY}
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_SERVICE: ${DB_SERVICE}
+  rasa:
+    image: quickslack/rasa_api:${BUILD_TAG}
+    deploy:
+      labels:
+        - traefik.frontend.rule=Host:rasabot.${BUILD_TAG}.qs.somethingtechie.com
+        - traefik.enable=true
+        - traefik.port=5005
+        - traefik.tags=traefik-public
+        - traefik.docker.network=traefik-public
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        - traefik.webservice.frontend.entryPoints=https
+    networks:
+      - net
+      - traefik-public
+    environment:
+      SLACK_TOKEN: ${SLACK_TOKEN}
+
+  flask:
+    image: quickslack/webapp:${BUILD_TAG}
+    deploy:
+      labels:
+        - traefik.frontend.rule=Host:webapp.${BUILD_TAG}.qs.somethingtechie.com
+        - traefik.enable=true
+        - traefik.port=8000
+        - traefik.tags=traefik-public
+        - traefik.docker.network=traefik-public
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        - traefik.webservice.frontend.entryPoints=https
+    networks:
+      - net
+      - traefik-public
+    environment:
+      FLASK_APP: "quickslack:APP"
+      SLACK_EMAIL: ${SLACK_EMAIL}
+      SLACK_PASSWORD: ${SLACK_PASSWORD}
+      SLACK_WORKSPACE_URL: ${SLACK_WORKSPACE_URL}
+      SLACK_TOKEN: ${SLACK_TOKEN}
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_SERVICE: ${DB_SERVICE}
+      SECRET_KEY: ${SECRET_KEY}
+  model:
+    image: quickslack/modelapi:${BUILD_TAG}
+    networks:
+      - net
+  task-monitor:
+      image: quickslack/webapp:${BUILD_TAG}
+      labels:
+        - traefik.frontend.rule=Host:flower.${BUILD_TAG}.qs.somethingtechie.com
+        - traefik.enable=true
+        - traefik.port=5555
+        - traefik.tags=traefik-public
+        - traefik.docker.network=traefik-public
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        - traefik.webservice.frontend.entryPoints=https
+      environment: 
+        SECRET_KEY: ${SECRET_KEY}
+        DB_NAME: ${DB_NAME}
+        DB_PASS: ${DB_PASS}
+        DB_PORT: ${DB_PORT}
+        DB_USER: ${DB_USER}
+        DB_SERVICE: ${DB_SERVICE}
+      networks:
+        - net
+        - traefik-public
+  redis:
+    networks: 
+      - net
+  postgres:
+    environment: 
+      DB_NAME: ${DB_NAME}
+      DB_PASS: ${DB_PASS}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+    networks: 
+      - net
+networks:
+  net:
+    driver: overlay
+    attachable: true
+  traefik-public:
+    external: true
+    
