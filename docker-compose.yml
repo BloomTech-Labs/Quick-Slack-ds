@@ -39,13 +39,20 @@ services:
         volumes:
             - ./database:/database
 
+    # api:
+    #     container_name: model
+    #     restart: unless-stopped
+    #     build: './model'
+    #     command: gunicorn -c "python:config.gunicorn" --reload "api:APP"
+    #     volumes:
+    #         - './model:/api'
     api:
         container_name: model
         restart: unless-stopped
-        build: './model'
-        command: gunicorn -c "python:config.gunicorn" --reload "api:APP"
+        build: './sagemaker'
+        command: python serve
         volumes:
-            - './model:/api'
+            - './sagemaker/container:/opt/program'
 
 volumes:
     postgres:
