@@ -36,13 +36,13 @@ services:
         environment:
             SLACK_TOKEN: ${SLACK_TOKEN}
 
-    api:
-        container_name: model
-        restart: unless-stopped
-        build: './sagemaker'
-        command: python serve
-        volumes:
-            - './sagemaker/container:/opt/program'
+    # api:
+    #     container_name: model
+    #     restart: unless-stopped
+    #     build: './sagemaker'
+    #     command: python serve
+    #     volumes:
+    #         - './sagemaker/container:/opt/program'
             
     rasa:
         build: './rasa_api'
