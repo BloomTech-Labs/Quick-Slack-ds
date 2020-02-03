@@ -1,0 +1,2 @@
+aiojobs
+rasa==1.7.0

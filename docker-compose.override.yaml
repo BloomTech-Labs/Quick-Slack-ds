@@ -3,11 +3,20 @@ services:
     flask:
         env_file:
             - ./.env
+        volumes:
+            - './flask:/flask'
         ports:
             - 8000:8000
     redis:
         ports:
             - 6379:6379
+        volumes:
+            - 'redis:/var/lib/redis/data'
+    celery:
+        env_file:
+            - ./.env
+        volumes:
+            - './flask:/flask'
     postgres:
         env_file:
             - ./.env
@@ -18,9 +27,19 @@ services:
             - ./.env
         ports:
             - 5555:5555
-    api:
+        volumes:
+            - './flask:/flask'
+    model:
         ports:
             - 8080:8080
+        volumes:
+            - './model:/api'
+        environment: 
+            FLASK_RUN_PORT: 8080
+            FLASK_APP: "api:APP"
+            SLACK_TOKEN: ${SLACK_TOKEN}
+        volumes:
+            - './model:/api'
     notebook_server:
         build: ./notebook_server
         volumes:
@@ -28,3 +47,14 @@ services:
         command: jupyter lab
         ports:
             - 8888:8888
+    rasa:
+        volumes: 
+            - './rasa_api:/rasa_api'
+        ports: 
+            - 5005:5005
+
+volumes:
+    postgres:
+    redis:
+
+
