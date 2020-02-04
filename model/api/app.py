@@ -8,15 +8,20 @@ from .utils.torch import top_filtering
 import slack
 import os
 import re
+import wget
 
 gpt2_medium_config = GPT2Config(n_ctx=1024, n_embd=1024, n_layer=24, n_head=16)
 print('Instantiating tokenizer...')
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-print('Tokenizer ready!')
+print('Configuring model...')
 model = GPT2LMHeadModel(gpt2_medium_config)
+print('Downloading pkl from s3...')
+url = 'https://model-2.s3.us-east-2.amazonaws.com/medium_ft.pkl'
+pkl_file = wget.download(url)
 load_start = time.time()
 print('Loading model...')
-model.load_state_dict(torch.load("/api/api/medium_ft.pkl"), strict=False)
+# model.load_state_dict(torch.load("/api/api/medium_ft.pkl"), strict=False)
+model.load_state_dict(torch.load(pkl_file), strict=False)
 print(f'Model ready! {time.time() - load_start}')
 
 eos = [tokenizer.encoder["<|endoftext|>"]]
