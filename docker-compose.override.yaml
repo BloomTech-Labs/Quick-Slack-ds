@@ -39,7 +39,7 @@ services:
             FLASK_APP: "api:APP"
             SLACK_TOKEN: ${SLACK_TOKEN}
         volumes:
-            - './model:/api'
+            - './sagemaker/container:/opt/program'
     notebook_server:
         build: ./notebook_server
         volumes:

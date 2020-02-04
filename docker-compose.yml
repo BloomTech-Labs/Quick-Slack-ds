@@ -36,8 +36,6 @@ services:
         command: python serve
         environment:
             SLACK_TOKEN: ${SLACK_TOKEN}
-        volumes:
-            - './sagemaker/container:/opt/program'
 
     # model:
     #     restart: unless-stopped
