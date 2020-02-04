@@ -1,9 +1,10 @@
 deploy:
 	@ssh -i ${SSH_KEYFILE} -o "StrictHostKeyChecking=no" -t ubuntu@teststaging.somethingtechie.com "(\
           export DB_NAME=${DB_NAME};\
-          export DB_PASS=${DB_PAS};\
+          export DB_PASS=${DB_PASS};\
           export DB_SERVICE=${DB_SERVICE};\
           export DB_PORT=${DB_PORT};\
+          export DB_USER=${DB_USER};\
           export SECRET_KEY=${SECRET_KEY};\
           export SLACK_PASSWORD=${SLACK_PASSWORD};\
           export SLACK_EMAIL=${SLACK_EMAIL};\
