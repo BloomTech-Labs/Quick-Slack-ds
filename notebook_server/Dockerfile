@@ -14,7 +14,7 @@ ENV WORK_DIR /notebooks
 RUN mkdir $WORK_DIR
 WORKDIR $WORK_DIR
 
-COPY . .
+COPY ./notebooks .
 RUN useradd nbserver -m
 RUN chown nbserver:nbserver . -R
 RUN echo "nbserver     ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
