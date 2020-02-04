@@ -21,3 +21,4 @@ RUN echo "nbserver     ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
 USER nbserver
 COPY ./confi.json /home/nbserver/.jupyter/jupyter_notebook_config.json
 RUN sudo jupyter lab build
+RUN sudo chown nbserver:nbserver /home/nbserver/.jupyter -R

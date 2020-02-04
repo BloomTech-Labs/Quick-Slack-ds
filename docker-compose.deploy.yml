@@ -95,6 +95,8 @@ services:
       placement:
         constraints:
             - node.labels.gpu == cuda
+    command: jupyter lab --ip=0.0.0.0
+
   redis:
     networks: 
       - net
