@@ -96,6 +96,9 @@ services:
         constraints:
             - node.labels.gpu == cuda
     command: jupyter lab --ip=0.0.0.0
+    networks:
+      - net
+      - traefik-public
 
   redis:
     networks: 
