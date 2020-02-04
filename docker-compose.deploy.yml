@@ -92,8 +92,9 @@ services:
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
       replicas: 1
-      constraints:
-        - node.labels.gpu == 1
+      placement:
+        constraints:
+            - node.labels.gpu == cuda
   redis:
     networks: 
       - net
