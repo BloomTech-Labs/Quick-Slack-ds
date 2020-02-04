@@ -6,3 +6,6 @@ services:
     image: quickslack/modelapi:${BUILD_TAG}
   rasa:
     image: quickslack/rasa_api:${BUILD_TAG}
+  notebook_server:
+    build: ./notebook_server
+    image: quickslack/notebook_server:${BUILD_TAG}

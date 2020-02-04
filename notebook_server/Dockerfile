@@ -17,3 +17,4 @@ COPY . .
 RUN useradd nbserver -m
 RUN chown nbserver:nbserver . -R
 USER nbserver
+COPY ./confi.json /home/nbserver/.jupyter/jupyter_notebook_config.json
