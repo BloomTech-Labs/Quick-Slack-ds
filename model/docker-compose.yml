@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+
+  api:
+    volumes:
+      - '.:/api'
+    container_name: model-api
+    restart: unless-stopped
+    build: .
+    command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()"
+    ports:
+      - "8080:8080"

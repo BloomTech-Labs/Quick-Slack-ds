@@ -30,19 +30,21 @@ services:
         restart: unless-stopped
 
     model:
+        container_name: model
         restart: unless-stopped
-        build: './model'
-        command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()" --timeout 240
+        build: './sagemaker'
+        command: python serve
         environment:
             SLACK_TOKEN: ${SLACK_TOKEN}
+        volumes:
+            - './sagemaker/container:/opt/program'
 
-    # api:
-    #     container_name: model
+    # model:
     #     restart: unless-stopped
-    #     build: './sagemaker'
-    #     command: python serve
-    #     volumes:
-    #         - './sagemaker/container:/opt/program'
+    #     build: './model'
+    #     command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()" --timeout 240
+    #     environment:
+    #         SLACK_TOKEN: ${SLACK_TOKEN}
             
     rasa:
         build: './rasa_api'

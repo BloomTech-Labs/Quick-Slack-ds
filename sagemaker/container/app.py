@@ -1,4 +1,4 @@
-import os, time, json
+import os, time, json, time
 
 import flask
 from flask import Flask, jsonify, request
@@ -6,7 +6,8 @@ from flask import Flask, jsonify, request
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 import torch
 import torch.nn.functional as F
-import time
+
+import slack
 
 num_words = 50
 device = torch.device('cpu')
@@ -108,16 +109,42 @@ def create_app():
         except:
             return jsonify('The speed cow requires json')
         else:
-            input_text = payload['input_text']
+            tracker = payload['tracker']
+            latest_message = tracker['latest_message']
+            input_text = latest_message['text']
+            events = tracker['events']
+            user_event = [e for e in events if e['event'] == 'user']
+
+            thread_ts = user_event[-1]['metadata'].get('thread_ts') if user_event else None
+            channel = user_event[-1]['metadata'].get('channel') if user_event else None
 
             start = time.time()
             output_text = ScoringService.predict(input_text)
-            finish = time.time()
 
-            time_to_predict = finish - start
+            time_to_predict = time.time() - start
+
+            output = output_text + ' TIME_TO_PREDICT:' + str(time_to_predict)
+
+            client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
+            reply_count = 0
+            if thread_ts:
+                replies = client.conversations_replies(
+                    channel=channel,
+                    ts=str(thread_ts),
+                    limit=100
+                )
+                reply_count = replies['messages'][0]['reply_count']
+
+            output = output + f' Reply count: {reply_count}'
+
             return jsonify({
-                'input_text': input_text,
-                'output_text': output_text,
-                'prediction_time': time_to_predict
-                })
+                "text": output,
+                "buttons": [],
+                "image": None,
+                "elements": [],
+                "attachments": [],
+                "thread_ts": thread_ts
+            })
+
+            
     return app

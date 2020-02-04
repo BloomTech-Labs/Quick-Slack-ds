@@ -42,4 +42,4 @@ action_endpoint:
 #  queue: queue
 
 nlg:
-  url: http://model:8080/predict
+  url: http://model:8080/invocations
