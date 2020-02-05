@@ -1,9 +1,9 @@
 FROM python:3.7.6-buster
 
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
-         wget \
-         nginx \
-         ca-certificates \
+        wget \
+        nginx \
+        ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt
