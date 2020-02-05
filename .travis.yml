@@ -27,7 +27,6 @@ branches:
   only:
         - travis-test
         - richmond-rasa
-        - distortedlogic
 script:
     #- "docker-compose config|grep image:|awk '{$1=$1};1'|cut -c 7-|xargs -t -L1 docker pull"
     - docker-compose config
