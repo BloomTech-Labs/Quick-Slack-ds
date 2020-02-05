@@ -15,8 +15,8 @@ RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
 
 COPY . .
 
-RUN pip install --editable .
-RUN useradd flask
+RUN useradd flask -m
 RUN chown flask:flask . -R
 USER flask
+RUN pip install --editable .
 CMD gunicorn -c "python:config.gunicorn" "quickslack.app:create_app()"

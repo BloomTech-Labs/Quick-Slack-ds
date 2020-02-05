@@ -16,6 +16,6 @@ torch == 1.4.0
 
 transformers == 2.3.0
 
-gunicorn
+gunicorn == 20.0.4
 
 slackclient == 2.5.0

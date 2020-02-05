@@ -1,2 +1,2 @@
-aiojobs
-rasa==1.7.0
+aiojobs == 0.2.2
+rasa == 1.7.0
