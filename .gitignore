@@ -2,6 +2,7 @@
 *.log.*
 *.onnx
 *.pb
+*.gz
 
 */models/*/
 

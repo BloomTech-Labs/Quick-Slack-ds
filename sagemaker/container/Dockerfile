@@ -14,5 +14,5 @@ ENV PYTHONUNBUFFERED=TRUE
 ENV PYTHONDONTWRITEBYTECODE=TRUE
 ENV PATH="/opt/program:${PATH}"
 
-COPY container /opt/program
+COPY model /opt/program
 WORKDIR /opt/program
