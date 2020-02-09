@@ -1,0 +1,6 @@
+name: qs
+channels:
+  - defaults
+  - conda-forge
+prefix: C:\Users\jerme\Anaconda3\envs\qs
+
