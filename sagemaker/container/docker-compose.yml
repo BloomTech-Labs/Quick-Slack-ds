@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+    model:
+        container_name: model
+        restart: unless-stopped
+        build: '.'
+        command: python serve
+        volumes:
+            - './model:/opt/program'
+        ports:
+            - 8080:8080

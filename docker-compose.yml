@@ -32,7 +32,7 @@ services:
     model:
         container_name: model
         restart: unless-stopped
-        build: './sagemaker'
+        build: './sagemaker/container'
         command: python serve
         environment:
             SLACK_TOKEN: ${SLACK_TOKEN}

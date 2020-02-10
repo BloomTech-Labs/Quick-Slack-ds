@@ -109,41 +109,45 @@ def create_app():
         except:
             return jsonify('The speed cow requires json')
         else:
-            tracker = payload['tracker']
-            latest_message = tracker['latest_message']
-            input_text = latest_message['text']
-            events = tracker['events']
-            user_event = [e for e in events if e['event'] == 'user']
+            # tracker = payload['tracker']
+            # latest_message = tracker['latest_message']
+            # input_text = latest_message['text']
+            # events = tracker['events']
+            # user_event = [e for e in events if e['event'] == 'user']
 
-            thread_ts = user_event[-1]['metadata'].get('thread_ts') if user_event else None
-            channel = user_event[-1]['metadata'].get('channel') if user_event else None
+            # thread_ts = user_event[-1]['metadata'].get('thread_ts') if user_event else None
+            # channel = user_event[-1]['metadata'].get('channel') if user_event else None
 
             start = time.time()
-            output_text = ScoringService.predict(input_text)
-
+            output_text = ScoringService.predict(payload['input_text'])
             time_to_predict = time.time() - start
 
-            output = output_text + ' TIME_TO_PREDICT:' + str(time_to_predict)
+            # output = output_text + ' TIME_TO_PREDICT:' + str(time_to_predict)
 
-            client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
-            reply_count = 0
-            if thread_ts:
-                replies = client.conversations_replies(
-                    channel=channel,
-                    ts=str(thread_ts),
-                    limit=100
-                )
-                reply_count = replies['messages'][0]['reply_count']
+            # client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
+            # reply_count = 0
+            # if thread_ts:
+            #     replies = client.conversations_replies(
+            #         channel=channel,
+            #         ts=str(thread_ts),
+            #         limit=100
+            #     )
+            #     reply_count = replies['messages'][0]['reply_count']
 
-            output = output + f' Reply count: {reply_count}'
+            # output = output + f' Reply count: {reply_count}'
+
+            # return jsonify({
+            #     "text": output,
+            #     "buttons": [],
+            #     "image": None,
+            #     "elements": [],
+            #     "attachments": [],
+            #     "thread_ts": thread_ts
+            # })
 
             return jsonify({
-                "text": output,
-                "buttons": [],
-                "image": None,
-                "elements": [],
-                "attachments": [],
-                "thread_ts": thread_ts
+                "output_text": output_text,
+                "time_to_predict": time_to_predict,
             })
 
             
