@@ -2,13 +2,17 @@ version: '3.7'
 services:
   celery:
     image: quickslack/webapp:${BUILD_TAG}
-    environment: 
-      SECRET_KEY: ${SECRET_KEY}
+    environment:
+      SLACK_EMAIL: ${SLACK_EMAIL}
+      SLACK_PASSWORD: ${SLACK_PASSWORD}
+      SLACK_WORKSPACE_URL: ${SLACK_WORKSPACE_URL}
+      SLACK_TOKEN: ${SLACK_TOKEN}
       DB_NAME: ${DB_NAME}
       DB_PASS: ${DB_PASS}
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
       DB_SERVICE: ${DB_SERVICE}
+      SECRET_KEY: ${SECRET_KEY}
   rasa:
     image: quickslack/rasa_api:${BUILD_TAG}
     deploy:
@@ -69,13 +73,16 @@ services:
         - traefik.redirectorservice.frontend.entryPoints=http
         - traefik.redirectorservice.frontend.redirect.entryPoint=https
         - traefik.webservice.frontend.entryPoints=https
-      environment: 
-        SECRET_KEY: ${SECRET_KEY}
+      environment:
+        SLACK_PASSWORD: ${SLACK_PASSWORD}
+        SLACK_WORKSPACE_URL: ${SLACK_WORKSPACE_URL}
+        SLACK_TOKEN: ${SLACK_TOKEN}
         DB_NAME: ${DB_NAME}
         DB_PASS: ${DB_PASS}
         DB_PORT: ${DB_PORT}
         DB_USER: ${DB_USER}
         DB_SERVICE: ${DB_SERVICE}
+        SECRET_KEY: ${SECRET_KEY}
       networks:
         - net
         - traefik-public
