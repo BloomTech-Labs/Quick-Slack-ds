@@ -33,3 +33,46 @@ def top_filtering(logits, top_k=0, top_p=0.0, filter_value=-float('Inf')):
         logits = torch.zeros_like(logits).scatter(1, sorted_indices, sorted_logits)
     
     return logits
+
+
+def nlg(replies, model, tokenizer):
+    device = torch.device('cpu')
+    eos = [tokenizer.encoder["<|endoftext|>"]]
+    num_words = 50
+
+    past = None
+    temperature = 0.9
+    top_k = -1
+    top_p = 0.9
+
+    model.eval()
+    prev_input = None
+
+    # context_list = [re.sub('<[^>]+> ', '', m['text']) for m in replies['messages']]
+    # print(context_list)
+    # context = '<|endoftext|>'.join(context_list)
+    context = replies
+    user = tokenizer.encode(context)
+    prev_input = user
+    prev_input = torch.LongTensor(prev_input).unsqueeze(0).to(device)
+    _, past = model(prev_input, past=past)
+    prev_input = torch.LongTensor([eos]).to(device)
+        
+    sent = []
+    for i in range(500):
+        logits, past = model(prev_input, past=past)
+        logits = logits[:, -1, :] / temperature
+        logits = top_filtering(logits, top_k=top_k, top_p=top_p)
+
+        probs = torch.softmax(logits, dim=-1)
+
+        prev_input = torch.multinomial(probs, num_samples=1)
+        prev_word = prev_input.item()
+
+        if prev_word == eos[0]:
+            break
+        sent.append(prev_word)
+    
+    prev_input = torch.LongTensor([eos]).to(device)
+    _, past = model(prev_input, past=past)
+    return tokenizer.decode(sent)

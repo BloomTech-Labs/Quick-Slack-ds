@@ -21,3 +21,5 @@ gunicorn
 slackclient == 2.5.0
 
 wget==3.2
+
+pandas
