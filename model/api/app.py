@@ -77,11 +77,11 @@ def create_app():
             replies = lines['input_text']
 
             # Check if they want to search
-            if 'search:' in replies:
+            if 'search:' in replies.lower():
                 output = search_for(replies)
             
             # Check if they want a celebration post from #hired
-            elif 'hired insp' in replies:
+            elif 'hired insp' in replies.lower():
                 output = random.choice(choices)
             
             # Revert to natural language generation

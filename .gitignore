@@ -153,6 +153,9 @@ db_backups
 # large files (models)
 *.pkl
 
-
 # database
 database/
+
+# any LS data
+.csv
+hired
