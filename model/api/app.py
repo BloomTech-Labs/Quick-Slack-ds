@@ -4,6 +4,7 @@ from .utils.funcs import top_filtering, nlg
 from .utils.search import search_for
 
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, GPT2Config
+from annoy import AnnoyIndex
 import pandas as pd 
 import random
 import torch
