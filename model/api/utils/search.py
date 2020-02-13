@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine
+#from sqlalchemy import create_engine
+
 
 def search_for(text, tfidf, svd, annoy, df):
     vec = tfidf.transform(text)
@@ -6,8 +7,8 @@ def search_for(text, tfidf, svd, annoy, df):
 
     m_ids = []
     for i in annoy.get_nns_by_vector(vec.ravel(), 10):
-        m_ids_list.append(message_ids.message_id[i])
-    
+        m_ids.append(message_ids.message_id[i])
+
     # db_string = "postgresql://postgres:postgres@postgres/postgres"
     # db = create_engine(db_string)
 
@@ -25,4 +26,3 @@ def search_for(text, tfidf, svd, annoy, df):
 
     # return link
     return m_ids
-    

@@ -9,6 +9,8 @@ services:
             FLASK_RUN_PORT: 8000
             FLASK_APP: "quickslack:APP"
             FLASK_ENV: development
+        depends_on: 
+            - postgres
 
     redis:
         image: redis:3.0-alpine

@@ -159,3 +159,4 @@ database/
 # any LS data
 .csv
 hired
+.DS_Store

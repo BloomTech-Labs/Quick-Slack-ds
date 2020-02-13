@@ -19,4 +19,5 @@ RUN useradd flask -m
 RUN chown flask:flask . -R
 USER flask
 RUN pip install --editable .
+ENV PATH="/home/flask/.local/bin:${PATH}"
 CMD gunicorn -c "python:config.gunicorn" "quickslack.app:create_app()"
