@@ -35,3 +35,12 @@ class Channel(db.Model):
     channel_name = db.Column(db.String(100))
     def __repr__(self):
         return f'<Message {self.channel_id}>'
+
+# class Cleaned(db.Model):
+#     db_id = db.Column(db.INteger, primary_key=True)
+#     message_id = db.Column(db.String(50), unique=True)
+#     cleaned = db.Column(db.String(5000), unique=True)
+#     def __repr__(self):
+#         return f'<Message {self.message_id}>'
+
+
