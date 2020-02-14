@@ -97,6 +97,9 @@ services:
       DB_USER: ${DB_USER}
     networks: 
       - net
+    deploy:
+      placement:
+        constraints: node.role==manager
 networks:
   net:
     driver: overlay
