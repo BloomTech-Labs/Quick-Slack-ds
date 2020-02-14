@@ -37,6 +37,7 @@ services:
         command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()" --timeout 600
         environment:
             SLACK_TOKEN: ${SLACK_TOKEN}
+            SLACK_WORKSPACE_URL: ${SLACK_WORKSPACE_URL}
     rasa:
         build: './rasa_api'
         command: rasa run --debug

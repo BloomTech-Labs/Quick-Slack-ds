@@ -157,6 +157,13 @@ db_backups
 database/
 
 # any LS data
-.csv
+*.csv
 hired
 .DS_Store
+# *.csv
+hired.csv
+
+annoy
+*.ann
+
+tfidf
