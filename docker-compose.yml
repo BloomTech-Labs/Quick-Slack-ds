@@ -38,6 +38,7 @@ services:
         environment:
             SLACK_TOKEN: ${SLACK_TOKEN}
             SLACK_WORKSPACE_URL: ${SLACK_WORKSPACE_URL}
+
     rasa:
         build: './rasa_api'
         command: rasa run --debug

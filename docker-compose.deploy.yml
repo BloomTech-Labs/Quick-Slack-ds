@@ -62,6 +62,10 @@ services:
     image: quickslack/modelapi:${BUILD_TAG}
     networks:
       - net
+    deploy:
+      placement:
+        constraints:
+          - node.role==manager
   task-monitor:
       image: quickslack/webapp:${BUILD_TAG}
       labels:
@@ -95,7 +99,8 @@ services:
       DB_PASS: ${DB_PASS}
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
-    networks: 
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
       - net
     deploy:
       placement:
