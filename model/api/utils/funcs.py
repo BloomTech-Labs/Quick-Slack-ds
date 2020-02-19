@@ -1,5 +1,15 @@
 import torch
 import torch.nn.functional as F
+import tarfile
+import tempfile
+from transformers import cached_path
+import os
+
+def extractor(file_path):
+    tempdir = tempfile.mkdtemp()
+    with tarfile.open(file_path, 'r:gz') as archive:
+        archive.extractall(tempdir)
+    return os.path.join(tempdir, 'model')
 
 def top_filtering(logits, top_k=0, top_p=0.0, filter_value=-float('Inf')):
     """ Filter a distribution of logits using top-k, top-p (nucleus) and/or threshold filtering
