@@ -19,14 +19,10 @@ import wget
 
 # Stuff for nlg
 gpt2_medium_config = GPT2Config(n_ctx=1024, n_embd=1024, n_layer=24, n_head=16)
-print('Instantiating tokenizer...')
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-print('Configuring model...')
 model = GPT2LMHeadModel(gpt2_medium_config)
-load_start = time.time()
-print('Loading model...')
 model.load_state_dict(torch.load('/datafiles/medium_ft.pkl'), strict=False)
-print(f'Model ready! {time.time() - load_start}')
+print('Tokenizer and model ready..')
 
 # More stuff for nlg
 eos = [tokenizer.encoder["<|endoftext|>"]]
@@ -35,28 +31,30 @@ device = torch.device('cpu')
 model.to(device)
 model.lm_head.weight.data = model.transformer.wte.weight.data
 
-# Search stuff
-print('Config index...')
-annoy = AnnoyIndex(768, 'angular')
-print('Loading index...')
-annoy.load('/datafiles/dim768-trees13.ann')
-print('Index loaded!')
+# Load indexes
+bert_annoy = AnnoyIndex(768, 'angular')
+bert_annoy.load('/datafiles/dim768-trees13.ann')
+tfidf_annoy = AnnoyIndex(100, 'angular')
+tfidf_annoy.load('/datafiles/tfidf.ann')
+print('Indexes loaded..')
 
-print('Loading embedder...')
+# Load fine-tuned BERT
 embedder = SentenceTransformer(extractor('/datafiles/distil-bert-SO.tar.gz'))
 embedder.to(device)
-print('Embedder loaded!')
+print('Embedder loaded..')
 
-# print('Loading tfidf...')
-# tfidf_file = open('/datafiles/tfidf.pkl', 'rb')
-# tfidf = pickle.loads(tfidf_file.read())
-# svd_file = open('/datafiles/svd.pkl', 'rb')
-# svd = pickle.loads(svd_file.read())
+# Load tfidf and svd
+tfidf_file = open('/datafiles/tfidf.pkl', 'rb')
+tfidf = pickle.loads(tfidf_file.read())
+svd_file = open('/datafiles/svd.pkl', 'rb')
+svd = pickle.loads(svd_file.read())
+print('TfidfVectorizer and TruncatedSVD loaded..')
 
+# Read in message ids
 hired = pd.read_csv('/datafiles/hired.csv')
 choices = hired.p_text.to_list()
-
-message_ids = pd.read_csv('/api/api/message_ids.csv')
+tfidf_m_ids = pd.read_csv('/api/api/tfidf_m_ids.csv')
+bert_m_ids = pd.read_csv('/api/api/bert_m_ids.csv')
 print('Everything is ready!')
 
 
@@ -69,8 +67,10 @@ def create_app():
         replies = lines['input_text']
         # Check if they want to search
         if 'search:' in replies.lower():
-            output = search_for(replies, embedder, annoy, message_ids)
-            # output = search_for(replies, tfidf, svd, annoy, message_ids)
+            output = search_for(
+                replies, tfidf, svd, tfidf_annoy, tfidf_m_ids,
+                embedder, bert_annoy, bert_m_ids
+                )
 
         # Check if they want a celebration post from #hired
         elif 'hired insp' in replies.lower():
@@ -113,8 +113,10 @@ def create_app():
 
             # Check if they want to search
             if 'search:' in input_text.lower():
-                # output = search_for(input_text, tfidf, svd, annoy, message_ids)
-                output = search_for(input_text, embedder, annoy, message_ids)
+                output = search_for(
+                    replies, tfidf, svd, tfidf_annoy, tfidf_m_ids,
+                    embedder, bert_annoy, bert_m_ids
+                    )
                 output = "Related posts: " + "\n".join(output)
 
             # Check if they want a celebration post from #hired

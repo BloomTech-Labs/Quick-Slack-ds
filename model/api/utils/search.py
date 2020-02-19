@@ -3,44 +3,50 @@ import numpy as np
 import os
 
 
-# def search_for(text, tfidf, svd, annoy, message_ids):
-def search_for(text, embedder, annoy, message_ids):
-    # vec = tfidf.transform([text])
-    # vec = svd.transform(vec)
-    vec = embedder.encode([text])
-    vec = np.asarray(vec)
+def search_for(replies, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_annoy, bert_m_ids):
+    # Get vectors
+    tfidf_vec = tfidf.transform([replies])
+    tfidf_vec = svd.transform(tfidf_vec)
+    bert_vec = embedder.encode([replies])
+    bert_vec = np.asarray(bert_vec)
 
+    # Get ANN message ids
     m_ids = []
-    for i in annoy.get_nns_by_vector(vec.ravel(), 10):
-        m_ids.append(message_ids.message_id[i])
+    for i in bert_annoy.get_nns_by_vector(bert_vec.ravel(), 5):
+        m_ids.append(bert_m_ids.message_id[i])
+    for i in tfidf_annoy.get_nns_by_vector(tfidf_vec.ravel(), 5):
+        m_ids.append(tfidf_m_ids.message_id[i])
+    
+    # Remove duplicates
+    m_ids = list(set(m_ids))
 
-    db_string = "postgresql://postgres:postgres@postgres/postgres"
-    db = create_engine(db_string)
+    # db_string = "postgresql://postgres:postgres@postgres/postgres"
+    # db = create_engine(db_string)
 
-    conn = db.raw_connection()
-    cur = conn.cursor()
+    # conn = db.raw_connection()
+    # cur = conn.cursor()
 
-    links = []
-    for i in m_ids:
-        message_query = 'SELECT ts, channel_id, text FROM message WHERE message_id=%s'
-        reply_query = 'SELECT ts, channel_id, thread_ts, text FROM reply WHERE message_id=%s'
-        reply_query
-        cur.execute(message_query, (i,))
-        mres = cur.fetchone()
-        if mres:
-            print(mres[-1])
-            link = f'{os.environ.get("SLACK_WORKSPACE_URL")}archives/{mres[1]}' + \
-                f'/p{str(mres[0]).replace(".","").ljust(16, "0")}'
-            links.append(link)
-            continue
-        cur.execute(reply_query, (i,))
-        rres = cur.fetchone()
-        if rres:
-            print(rres[-1])
-            link = f'{os.environ.get("SLACK_WORKSPACE_URL")}archives/{rres[1]}' + \
-                f'/p{str(rres[0]).replace(".","").ljust(16, "0")}' + \
-                f'?thread_ts={str(rres[2]).ljust(17,"0")}'
-            links.append(link)
+    # links = []
+    # for i in m_ids:
+    #     message_query = 'SELECT ts, channel_id, text FROM message WHERE message_id=%s'
+    #     reply_query = 'SELECT ts, channel_id, thread_ts, text FROM reply WHERE message_id=%s'
+    #     reply_query
+    #     cur.execute(message_query, (i,))
+    #     mres = cur.fetchone()
+    #     if mres:
+    #         print(mres[-1])
+    #         link = f'{os.environ.get("SLACK_WORKSPACE_URL")}archives/{mres[1]}' + \
+    #             f'/p{str(mres[0]).replace(".","").ljust(16, "0")}'
+    #         links.append(link)
+    #         continue
+    #     cur.execute(reply_query, (i,))
+    #     rres = cur.fetchone()
+    #     if rres:
+    #         print(rres[-1])
+    #         link = f'{os.environ.get("SLACK_WORKSPACE_URL")}archives/{rres[1]}' + \
+    #             f'/p{str(rres[0]).replace(".","").ljust(16, "0")}' + \
+    #             f'?thread_ts={str(rres[2]).ljust(17,"0")}'
+    #         links.append(link)
 
     #     link = cur.execute(f"SELECT * FROM message_links WHERE '{i}' == message_links.message_id;")
     #     link = cur.execute(f"SELECT * FROM cleaned WHERE '{i}' == cleaned.message_id;")
@@ -50,5 +56,5 @@ def search_for(text, embedder, annoy, message_ids):
     # conn.close()
 
     # return link
-    return links
-    # return m_ids
+    # return links
+    return m_ids
