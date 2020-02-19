@@ -12,8 +12,12 @@ def search_for(replies, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_ann
 
     # Get ANN message ids
     m_ids = []
-    for i in bert_annoy.get_nns_by_vector(bert_vec.ravel(), 5):
-        m_ids.append(bert_m_ids.message_id[i])
+    query_list = bert_annoy.get_nns_by_vector(bert_vec.ravel(), 5, include_distances=True)
+    for _, (a_index, distance) in enumerate(zip(query_list[0], query_list[1])):
+        # Don't add ids that are too far away in hyperspace
+        if distance < 1.13:
+            m_ids.append(bert_m_ids.message_id[a_index])
+        
     for i in tfidf_annoy.get_nns_by_vector(tfidf_vec.ravel(), 5):
         m_ids.append(tfidf_m_ids.message_id[i])
     
