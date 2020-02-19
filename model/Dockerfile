@@ -9,6 +9,7 @@ ENV PYTHONUNBUFFERED 1
 ADD https://model-2.s3.us-east-2.amazonaws.com/medium_ft.pkl /datafiles/
 ADD https://model-2.s3.us-east-2.amazonaws.com/distil-bert-SO.tar.gz /datafiles/
 ADD https://model-2.s3.us-east-2.amazonaws.com/dim768-trees13.ann /datafiles/
+ADD https://model-2.s3.us-east-2.amazonaws.com/tfidf.ann /datafiles/
 ADD https://model-2.s3.us-east-2.amazonaws.com/tfidf.pkl /datafiles/ 
 ADD https://model-2.s3.us-east-2.amazonaws.com/svd.pkl /datafiles/
 ADD https://model-2.s3.us-east-2.amazonaws.com/hired.csv /datafiles/
