@@ -2,7 +2,7 @@ import requests
 import json
 
 if __name__ == '__main__':
-    url = 'http://127.0.0.1:8080/predict'
+    url = 'http://127.0.0.1:8080/predict_test'
     # url = 'http://model-api:8080/predict'
     # url = 'http://0.0.0.0:8080/predict'
     input_text = input('>>>')

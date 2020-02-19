@@ -1,10 +1,14 @@
 from sqlalchemy import create_engine
+import numpy as np
 import os
 
 
-def search_for(text, tfidf, svd, annoy, message_ids):
-    vec = tfidf.transform([text])
-    vec = svd.transform(vec)
+# def search_for(text, tfidf, svd, annoy, message_ids):
+def search_for(text, embedder, annoy, message_ids):
+    # vec = tfidf.transform([text])
+    # vec = svd.transform(vec)
+    vec = embedder.encode([text])
+    vec = np.asarray(vec)
 
     m_ids = []
     for i in annoy.get_nns_by_vector(vec.ravel(), 10):
@@ -47,3 +51,4 @@ def search_for(text, tfidf, svd, annoy, message_ids):
 
     # return link
     return links
+    # return m_ids
