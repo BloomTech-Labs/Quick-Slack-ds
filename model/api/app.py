@@ -114,7 +114,7 @@ def create_app():
             # Check if they want to search
             if 'search:' in input_text.lower():
                 output = search_for(
-                    replies, tfidf, svd, tfidf_annoy, tfidf_m_ids,
+                    input_text, tfidf, svd, tfidf_annoy, tfidf_m_ids,
                     embedder, bert_annoy, bert_m_ids
                     )
                 output = "Related posts: " + "\n".join(output)

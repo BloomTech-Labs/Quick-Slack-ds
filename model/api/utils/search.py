@@ -3,11 +3,11 @@ import numpy as np
 import os
 
 
-def search_for(replies, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_annoy, bert_m_ids):
+def search_for(input_text, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_annoy, bert_m_ids):
     # Get vectors
-    tfidf_vec = tfidf.transform([replies])
+    tfidf_vec = tfidf.transform([input_text])
     tfidf_vec = svd.transform(tfidf_vec)
-    bert_vec = embedder.encode([replies])
+    bert_vec = embedder.encode([input_text])
     bert_vec = np.asarray(bert_vec)
 
     # Get ANN message ids
