@@ -13,6 +13,9 @@ ADD https://model-2.s3.us-east-2.amazonaws.com/tfidf.ann /datafiles/
 ADD https://model-2.s3.us-east-2.amazonaws.com/tfidf.pkl /datafiles/ 
 ADD https://model-2.s3.us-east-2.amazonaws.com/svd.pkl /datafiles/
 ADD https://model-2.s3.us-east-2.amazonaws.com/hired.csv /datafiles/
+ADD https://model-2.s3.us-east-2.amazonaws.com/tfidf_m_ids.csv /datafiles/
+ADD https://model-2.s3.us-east-2.amazonaws.com/bert_m_ids.csv /datafiles/
+
 COPY requirements.txt requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
 COPY . .
