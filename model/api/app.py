@@ -53,8 +53,8 @@ print('TfidfVectorizer and TruncatedSVD loaded..')
 # Read in message ids
 hired = pd.read_csv('/datafiles/hired.csv')
 choices = hired.p_text.to_list()
-tfidf_m_ids = pd.read_csv('/api/api/tfidf_m_ids.csv')
-bert_m_ids = pd.read_csv('/api/api/bert_m_ids.csv')
+tfidf_m_ids = pd.read_csv('/datafiles/tfidf_m_ids.csv')
+bert_m_ids = pd.read_csv('/datafiles/bert_m_ids.csv')
 print('Everything is ready!')
 
 

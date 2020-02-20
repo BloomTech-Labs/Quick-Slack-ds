@@ -52,13 +52,7 @@ def search_for(replies, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_ann
                 f'?thread_ts={str(rres[2]).ljust(17,"0")}'
             links.append(link)
 
-        link = cur.execute(f"SELECT * FROM message_links WHERE '{i}' == message_links.message_id;")
-        link = cur.execute(f"SELECT * FROM cleaned WHERE '{i}' == cleaned.message_id;")
-        links.append(link)
-
     conn.commit()
     conn.close()
 
-    # return link
     return links
-    # return m_ids
