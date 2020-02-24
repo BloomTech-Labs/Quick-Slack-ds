@@ -149,3 +149,21 @@ tensorflow_serving/model_volume/models/distilgpt2/saved_model.pb
 .vscode/
 
 db_backups
+
+# large files (models)
+*.pkl
+
+# database
+database/
+
+# any LS data
+*.csv
+hired
+.DS_Store
+# *.csv
+hired.csv
+
+annoy
+*.ann
+
+tfidf

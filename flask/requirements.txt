@@ -26,7 +26,7 @@ flask-debugtoolbar == 0.10.1
 flask-sqlalchemy == 2.4.1
 
 # quickslack\routes\dashboard\forms.py: 1
-flask-wtf == 0.14.2
+flask-wtf == 0.14.3
 
 # config\flask.py: 1
 # quickslack\app.py: 3

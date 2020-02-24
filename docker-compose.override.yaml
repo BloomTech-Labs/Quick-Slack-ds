@@ -22,6 +22,8 @@ services:
             - ./.env
         ports:
             - 5432:5432
+        volumes:
+            - './database:/database'
     task-monitor:
         env_file:
             - ./.env
@@ -52,6 +54,9 @@ services:
             - './rasa_api:/rasa_api'
         ports: 
             - 5005:5005
+    ngrok:
+        build: ./ngrok
+        command: ngrok http rasa:5005 --log stdout
 
 volumes:
     postgres:

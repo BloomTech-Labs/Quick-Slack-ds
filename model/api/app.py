@@ -1,78 +1,94 @@
 from flask import Flask, jsonify, request
 
-from transformers import GPT2Tokenizer, GPT2LMHeadModel
+from .utils.funcs import top_filtering, nlg, extractor
+from .utils.search import search_for
+
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, GPT2Config
+from sentence_transformers import SentenceTransformer
+from annoy import AnnoyIndex
+
+import pandas as pd
+import random
 import torch
-import torch.nn.functional as F
+import pickle
 import time
-from .utils.torch import top_k_top_p_filtering
 import slack
 import os
+import re
+import wget
 
+# Stuff for nlg
+gpt2_medium_config = GPT2Config(n_ctx=1024, n_embd=1024, n_layer=24, n_head=16)
+tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+model = GPT2LMHeadModel(gpt2_medium_config)
+model.load_state_dict(torch.load('/datafiles/medium_ft.pkl'), strict=False)
+print('Tokenizer and model ready..')
+
+# More stuff for nlg
+eos = [tokenizer.encoder["<|endoftext|>"]]
 num_words = 50
 device = torch.device('cpu')
+model.to(device)
+model.lm_head.weight.data = model.transformer.wte.weight.data
 
+# Load indexes
+bert_annoy = AnnoyIndex(768, 'angular')
+bert_annoy.load('/datafiles/dim768-trees13.ann')
+tfidf_annoy = AnnoyIndex(100, 'angular')
+tfidf_annoy.load('/datafiles/tfidf.ann')
+print('Indexes loaded..')
 
-# model.to(device)
+# Load fine-tuned BERT
+embedder = SentenceTransformer(extractor('/datafiles/distil-bert-SO.tar.gz'))
+embedder.to(device)
+print('Embedder loaded..')
 
+# Load tfidf and svd
+tfidf_file = open('/datafiles/tfidf.pkl', 'rb')
+tfidf = pickle.loads(tfidf_file.read())
+svd_file = open('/datafiles/svd.pkl', 'rb')
+svd = pickle.loads(svd_file.read())
+print('TfidfVectorizer and TruncatedSVD loaded..')
 
-def sample_sequence(
-        model,
-        length,
-        context,
-        num_samples=1,
-        temperature=1,
-        top_k=0,
-        top_p=0.9,
-        repetition_penalty=1.0,
-        device="cuda",
-):
-    context = torch.tensor(context, dtype=torch.long, device=device)
-    context = context.unsqueeze(0).repeat(num_samples, 1)
-    generated = context
-    with torch.no_grad():
-        for _ in range(length):
-            inputs = {"input_ids": generated}
-            outputs = model(**inputs)
-            next_token_logits = outputs[0][0, -1, :] / \
-                                (temperature if temperature > 0 else 1.0)
-            for _ in set(generated.view(-1).tolist()):
-                next_token_logits[_] /= repetition_penalty
-            filtered_logits = top_k_top_p_filtering(
-                next_token_logits, top_k=top_k, top_p=top_p)
-            if temperature == 0:
-                next_token = torch.argmax(filtered_logits).unsqueeze(0)
-            else:
-                next_token = torch.multinomial(
-                    F.softmax(filtered_logits, dim=-1), num_samples=1)
-            generated = torch.cat(
-                (generated, next_token.unsqueeze(0)), dim=1)
-    return generated
-
-
-tokenizer = GPT2Tokenizer.from_pretrained("distilgpt2")
-model = GPT2LMHeadModel.from_pretrained("distilgpt2")
-model.eval()
-
-
-def get_output(input_text, model=model, tokenizer=tokenizer):
-    indexed_tokens = tokenizer.encode(input_text)
-    output = sample_sequence(
-        model, num_words, indexed_tokens, device=device)
-    return tokenizer.decode(
-        output[0, 0:].tolist(), clean_up_tokenization_spaces=True,
-        skip_special_tokens=True
-    )
+# Read in message ids
+hired = pd.read_csv('/datafiles/hired.csv')
+choices = hired.p_text.to_list()
+tfidf_m_ids = pd.read_csv('/datafiles/tfidf_m_ids.csv')
+bert_m_ids = pd.read_csv('/datafiles/bert_m_ids.csv')
+print('Everything is ready!')
 
 
 def create_app():
     app = Flask(__name__)
 
+    @app.route('/predict_test', methods=['POST'])
+    def predict_test():
+        lines = request.get_json(force=True)
+        replies = lines['input_text']
+        # Check if they want to search
+        if 'sr:' in replies.lower():
+            output = search_for(
+                replies, tfidf, svd, tfidf_annoy, tfidf_m_ids,
+                embedder, bert_annoy, bert_m_ids
+                )
+
+        # Check if they want a celebration post from #hired
+        elif 'hired insp' in replies.lower():
+            output = random.choice(choices)
+
+        # Revert to natural language generation
+        else:
+            now = time.time()
+            text = nlg(replies, model, tokenizer)
+            elapsed = time.time() - now
+            output = text + ' ELAPSED TIME:' + str(elapsed)
+
+        return jsonify({'output_text': output})
+
     @app.route('/predict', methods=['POST'])
     def predict():
         if request.method == 'POST':
-
             lines = request.get_json(force=True)
-            print(lines)
             tracker = lines['tracker']
             latest_message = tracker['latest_message']
             input_text = latest_message['text']
@@ -83,13 +99,7 @@ def create_app():
                 'thread_ts') if user_event else None
             channel = user_event[-1]['metadata'].get(
                 'channel') if user_event else None
-            time_now = time.time()
-            output_text = get_output(input_text)
-            # output_text = "Super Instant"
-            # output_text = 'this is a canned response'
-            time_to_predict = time.time() - time_now
-
-            output = output_text + ' TIME_TO_PREDICT:' + str(time_to_predict)
+            print('Received text!')
 
             client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
             reply_count = 0
@@ -97,12 +107,28 @@ def create_app():
                 replies = client.conversations_replies(
                     channel=channel,
                     ts=str(thread_ts),
-                    limit=100
+                    limit=3
                 )
                 reply_count = replies['messages'][0]['reply_count']
-                #print(replies)
-                #print(thread_ts)
-            output = output + f' Reply count: {reply_count}'
+
+            # Check if they want to search
+            if 'sr:' in input_text.lower():
+                output = search_for(
+                    input_text, tfidf, svd, tfidf_annoy, tfidf_m_ids,
+                    embedder, bert_annoy, bert_m_ids
+                    )
+                output = "Related posts: " + "\n".join(output)
+
+            # Check if they want a celebration post from #hired
+            elif 'hired insp' in input_text.lower():
+                output = random.choice(choices)
+
+            # Revert to natural language generation
+            else:
+                now = time.time()
+                text = nlg(input_text, model, tokenizer)
+                elapsed = time.time() - now
+                output = text + ' ELAPSED TIME:' + str(elapsed)
 
             return jsonify({
                 "text": output,
