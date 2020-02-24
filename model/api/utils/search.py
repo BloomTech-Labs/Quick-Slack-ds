@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 import numpy as np
 import os
+from itertools import chain
 
 
 def search_for(input_text, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_annoy, bert_m_ids):
@@ -31,6 +32,7 @@ def search_for(input_text, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_
     cur = conn.cursor()
 
     links = []
+    messages = []
     for i in m_ids:
         message_query = 'SELECT ts, channel_id, text FROM message WHERE message_id=%s'
         reply_query = 'SELECT ts, channel_id, thread_ts, text FROM reply WHERE message_id=%s'
@@ -42,6 +44,8 @@ def search_for(input_text, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_
             link = f'{os.environ.get("SLACK_WORKSPACE_URL")}archives/{mres[1]}' + \
                 f'/p{str(mres[0]).replace(".","").ljust(16, "0")}'
             links.append(link)
+            message = mres[2][:30] + '..'
+            messages.append(message)
             continue
         cur.execute(reply_query, (i,))
         rres = cur.fetchone()
@@ -51,8 +55,12 @@ def search_for(input_text, tfidf, svd, tfidf_annoy, tfidf_m_ids, embedder, bert_
                 f'/p{str(rres[0]).replace(".","").ljust(16, "0")}' + \
                 f'?thread_ts={str(rres[2]).ljust(17,"0")}'
             links.append(link)
+            message = rres[3][:30] + '..'
+            messages.append(message)
 
     conn.commit()
     conn.close()
 
-    return links
+    # return links
+    return [lis[i] for i in range(len(links)) for lis in [messages, links]]
+    

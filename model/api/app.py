@@ -66,7 +66,7 @@ def create_app():
         lines = request.get_json(force=True)
         replies = lines['input_text']
         # Check if they want to search
-        if 'search:' in replies.lower():
+        if 'sr:' in replies.lower():
             output = search_for(
                 replies, tfidf, svd, tfidf_annoy, tfidf_m_ids,
                 embedder, bert_annoy, bert_m_ids
@@ -112,7 +112,7 @@ def create_app():
                 reply_count = replies['messages'][0]['reply_count']
 
             # Check if they want to search
-            if 'search:' in input_text.lower():
+            if 'sr:' in input_text.lower():
                 output = search_for(
                     input_text, tfidf, svd, tfidf_annoy, tfidf_m_ids,
                     embedder, bert_annoy, bert_m_ids
