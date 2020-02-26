@@ -35,23 +35,25 @@ services:
         restart: unless-stopped
         build: './model'
         command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()" --timeout 600
-        environment:
-            SLACK_TOKEN: ${SLACK_TOKEN}
-            SLACK_WORKSPACE_URL: ${SLACK_WORKSPACE_URL}
 
     model1:
         restart: unless-stopped
         build: './model'
         command: gunicorn -c "python:config.gunicorn" --reload "api.app:create_app()" --timeout 600
-        environment:
-            SLACK_TOKEN: ${SLACK_TOKEN1}
-            SLACK_WORKSPACE_URL: ${SLACK_WORKSPACE_URL}
-
+        
     rasa:
         build: './rasa_api'
         command: rasa run --debug
         environment: 
             SLACK_TOKEN: ${SLACK_TOKEN}
+            MODEL_HOST_NAME: model
+    
+    rasa1:
+        build: './rasa_api'
+        command: rasa run --debug
+        environment:
+            SLACK_TOKEN: ${SLACK_TOKEN1}
+            MODEL_HOST_NAME: model1
 
 volumes:
     postgres:

@@ -57,6 +57,7 @@ tfidf_m_ids = pd.read_csv('/datafiles/tfidf_m_ids.csv')
 bert_m_ids = pd.read_csv('/datafiles/bert_m_ids.csv')
 print('Everything is ready!')
 
+bot_to_at = os.environ.get("BOT_TO_AT")
 
 def create_app():
     app = Flask(__name__)
@@ -107,9 +108,23 @@ def create_app():
                 replies = client.conversations_replies(
                     channel=channel,
                     ts=str(thread_ts),
-                    limit=3
+                    limit=4
                 )
+                # print('REPLIES:\n' + replies)
+                # print('INPUT TEXT' + input_text)
+                # reply_texts = [reply.get('text') for reply in replies['messages'] if reply.get('text')]
+                # print('REPLY TEXT' + reply_texts)
+                # input_text = '<endoftext>'.join(reply_texts + [input_text])
                 reply_count = replies['messages'][0]['reply_count']
+                print(reply_count)
+                if reply_count > 1:
+                    context_list = [re.sub('<[^>]+> ', '', m['text']) for m in replies['messages'][1:]]
+                else:
+                    context_list = [re.sub('<[^>]+> ', '', m['text']) for m in replies['messages']]
+                print(context_list)
+                input_text = '<|endoftext|>'.join(context_list)
+                print(input_text)
+                
 
             # Check if they want to search
             if 'search:' in input_text.lower():
@@ -128,7 +143,10 @@ def create_app():
                 now = time.time()
                 text = nlg(input_text, model, tokenizer)
                 elapsed = time.time() - now
-                output = text + ' ELAPSED TIME:' + str(elapsed)
+                if reply_count < 20:
+                    output = bot_to_at + ' ' + text# + ' ELAPSED TIME:' + str(elapsed)
+                else:
+                    output = text# + ' ELAPSED TIME:' + str(elapsed)
 
             return jsonify({
                 "text": output,
