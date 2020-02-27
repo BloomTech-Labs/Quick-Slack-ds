@@ -108,7 +108,7 @@ def create_app():
                 replies = client.conversations_replies(
                     channel=channel,
                     ts=str(thread_ts),
-                    limit=4
+                    limit=5
                 )
                 # print('REPLIES:\n' + replies)
                 # print('INPUT TEXT' + input_text)
@@ -116,14 +116,14 @@ def create_app():
                 # print('REPLY TEXT' + reply_texts)
                 # input_text = '<endoftext>'.join(reply_texts + [input_text])
                 reply_count = replies['messages'][0]['reply_count']
-                print(reply_count)
+                # print(reply_count)
                 if reply_count > 1:
                     context_list = [re.sub('<[^>]+> ', '', m['text']) for m in replies['messages'][1:]]
                 else:
                     context_list = [re.sub('<[^>]+> ', '', m['text']) for m in replies['messages']]
-                print(context_list)
+                # print(context_list)
                 input_text = '<|endoftext|>'.join(context_list)
-                print(input_text)
+                # print(input_text)
                 
 
             # Check if they want to search
