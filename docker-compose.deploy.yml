@@ -84,6 +84,8 @@ services:
       placement:
         constraints:
           - node.labels.gpu == cuda
+    environment:
+      SLACK_TOKEN: ${SLACK_TOKEN}
   model1:
     image: quickslack/modelapi:${BUILD_TAG}
     networks:
@@ -92,6 +94,8 @@ services:
       placement:
         constraints:
           - node.labels.gpu == cuda
+    environment:
+      SLACK_TOKEN: ${SLACK_TOKEN1}
   
   task-monitor:
       image: quickslack/webapp:${BUILD_TAG}
