@@ -108,7 +108,7 @@ def create_app():
                 replies = client.conversations_replies(
                     channel=channel,
                     ts=str(thread_ts),
-                    limit=5
+                    limit=3
                 )
                 # print('REPLIES:\n' + replies)
                 # print('INPUT TEXT' + input_text)
