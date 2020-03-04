@@ -2,31 +2,17 @@
 
 ## Contributors
 
-🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
-
 |                                       [Owen Burton](https://github.com/owenburton) <br/> Machine Learning                                        |                                       [Richmond Macaspac](https://github.com/macr) <br/> Data Engineer                                        |                                       [Jeremy Meek](https://github.com/Distortedlogic) <br/> Data Engineer                                        |                                       [Nick Flannery](https://github.com/Nckflannery) <br/> Machine Learning                                        |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 |                      [<img src="https://media-exp1.licdn.com/dms/image/C5603AQF8MJKbCDwy5Q/profile-displayphoto-shrink_200_200/0?e=1588809600&v=beta&t=MbZIjtE4Xc2k4OxzQGWKkvhtxjUSnRMm8JzNRtPAYCc" width = "200" />](https://github.com/owenburton)                       |                      [<img src="https://ca.slack-edge.com/T4JUEB3ME-UHEDDJAG6-cd5e1f43e7c5-512" width = "200" />](https://github.com/macr)                       |                      [<img src="https://avatars2.githubusercontent.com/u/54854447?s=460&v=4" width = "200" />](https://github.com/Distortedlogic)                       |                      [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQE5s0rWy50Ncw/profile-displayphoto-shrink_200_200/0?e=1588809600&v=beta&t=EmR-_Bd9gOAM12ma_zCkomtlLpb0cuXJyDRO4Z-Rlvc" width = "200" />](https://github.com/Nckflannery)                       |                     
 |                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/owenburton)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/macr)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Distortedlogic)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Nckflannery)           |
 | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/owenburton22/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/richmond-macaspac/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/jeremy-meek-765b8b159/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/nickfflannery/) |
 
-
-
-🚫 5️⃣ Optional examples of using images with links for your tech stack, make sure to change these to fit your project
-
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](netlify link goes in these parenthesis)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
-🚫 more info on using badges [here](https://github.com/badges/shields)
-
 ## Project Overview
 
+[Trello Board](https://trello.com/b/j2GRaMZ5/quick-slack)
 
-1️⃣ [Trello Board](🚫add link to trello board here)
-
-1️⃣ [Product Canvas](🚫add link to product canvas here)
+[Product Canvas](https://www.notion.so/Quick-Slack-0cef120110274567ad4ff289e9bff596)
 
 🚫 Replace lorem ipsum with a description of your project
 
