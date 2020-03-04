@@ -14,59 +14,18 @@
 
 [Product Canvas](https://www.notion.so/Quick-Slack-0cef120110274567ad4ff289e9bff596)
 
-🚫 Replace lorem ipsum with a description of your project
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-🚫  delete if front end is not applicable to your project
-
-1️⃣ [Deployed Front End](🚫add link to deployed app here)
+Quick Slack is a knowledge management system that a user interacts with through a Slack chatbot. Quick Slack's purpose is to save users' time by providing better search functionality and by suggesting generated responses to notifications.
 
 ### Tech Stack
 
-🚫 List all of the languages, frameworks, services, etc used here.
-
-### 2️⃣ Predictions
-
-🚫 Describe your models here
-
-### 2️⃣ Explanatory Variables
-
--   Explanatory Variable 1
--   Explanatory Variable 2
--   Explanatory Variable 3
--   Explanatory Variable 4
--   Explanatory Variable 5
-
-### Data Sources
-🚫  Add to or delete souce links as needed for your project
-
-
--   [Source 1] (🚫add link to python notebook here)
--   [Source 2] (🚫add link to python notebook here)
--   [Source 3] (🚫add link to python notebook here)
--   [Source 4] (🚫add link to python notebook here)
--   [Source 5] (🚫add link to python notebook here)
-
-### Python Notebooks
-
-🚫  Add to or delete python notebook links as needed for your project
-
-[Python Notebook 1](🚫add link to python notebook here)
-
-[Python Notebook 2](🚫add link to python notebook here)
-
-[Python Notebook 3](🚫add link to python notebook here)
-
-### 3️⃣ How to connect to the web API
-
-🚫 List directions on how to connect to the API here
-
-### 3️⃣ How to connect to the data API
-
-🚫 List directions on how to connect to the API here
+Annoy  
+Docker  
+HuggingFace  
+Postgres  
+Python  
+Pytorch  
+Rasa  
+Travis  
 
 ## Contributing
 
@@ -103,10 +62,4 @@ Remember that this project is licensed under the MIT license, and by submitting 
 ### Attribution
 
 These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
-
-## Documentation
-
-See [Backend Documentation](_link to your backend readme here_) for details on the backend of our project.
-
-See [Front End Documentation](_link to your front end readme here_) for details on the front end of our project.
 
