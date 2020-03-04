@@ -20,11 +20,14 @@ Quick Slack is a knowledge management system that a user interacts with through 
 
 Annoy  
 Docker  
+Docker-Compose  
+Docker-Swarm  
 HuggingFace  
 Postgres  
 Python  
 Pytorch  
 Rasa  
+Slack API
 Travis  
 
 ## Contributing
