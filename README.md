@@ -1,94 +1,31 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
+# Quick-Slack
 
-🚫 The numbers 1️⃣ through 5️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
+## Contributors
 
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
-# 1️⃣ Title of project goes here
-
-You can find the project at [🚫URL NAME GOES HERE](🚫copy and paste URL here).
-
-## 5️⃣ Contributors
-
-🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
-
-|                                       [Student 1](https://github.com/)                                        |                                       [Student 2](https://github.com/)                                        |                                       [Student 3](https://github.com/)                                        |                                       [Student 4](https://github.com/)                                        |                                       [Student 5](https://github.com/)                                        |
+|                                       [Jeremy Meek](https://github.com/Distortedlogic) <br/> Data Engineer                                        |                                       [Richmond Macaspac](https://github.com/macr) <br/> Data Engineer                                        |                                       [Owen Burton](https://github.com/owenburton) <br/> Machine Learning                                        |                                       [Nick Flannery](https://github.com/Nckflannery) <br/> Machine Learning                                        |                                       [Marcus Jones](https://github.com/jonesy212) <br/> Team Lead                                        |
 | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-|                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |
-|                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)             |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) |
-
-
-
-🚫 5️⃣ Optional examples of using images with links for your tech stack, make sure to change these to fit your project
-
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](netlify link goes in these parenthesis)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
-🚫 more info on using badges [here](https://github.com/badges/shields)
+|                      [<img src="https://avatars2.githubusercontent.com/u/54854447?s=460&v=4" width = "200" />](https://github.com/Distortedlogic)                       |                      [<img src="https://ca.slack-edge.com/T4JUEB3ME-UHEDDJAG6-cd5e1f43e7c5-512" width = "200" />](https://github.com/macr)                       |                      [<img src="https://media-exp1.licdn.com/dms/image/C5603AQF8MJKbCDwy5Q/profile-displayphoto-shrink_200_200/0?e=1588809600&v=beta&t=MbZIjtE4Xc2k4OxzQGWKkvhtxjUSnRMm8JzNRtPAYCc" width = "200" />](https://github.com/owenburton)                       |                      [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQE5s0rWy50Ncw/profile-displayphoto-shrink_200_200/0?e=1588809600&v=beta&t=EmR-_Bd9gOAM12ma_zCkomtlLpb0cuXJyDRO4Z-Rlvc" width = "200" />](https://github.com/Nckflannery)                       |                      [<img src="https://avatars0.githubusercontent.com/u/49668160?s=400&v=4" width = "200" />](https://github.com/jonesy212)                       |                     
+|                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/DistortedLogic)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/macr)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/owenburton)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Nckflannery)           |                      [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/jonesy212)                       |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/jeremy-meek-765b8b159/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/richmond-macaspac/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/owenburton22/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/nickfflannery/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/marcus-jones-0227a66b/) |
 
 ## Project Overview
 
+[Trello Board](https://trello.com/b/j2GRaMZ5/quick-slack)
 
-1️⃣ [Trello Board](🚫add link to trello board here)
+[Product Canvas](https://www.notion.so/Quick-Slack-0cef120110274567ad4ff289e9bff596)
 
-1️⃣ [Product Canvas](🚫add link to product canvas here)
-
-🚫 Replace lorem ipsum with a description of your project
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-🚫  delete if front end is not applicable to your project
-
-1️⃣ [Deployed Front End](🚫add link to deployed app here)
+Quick Slack is a knowledge management system that a user interacts with through a Slack chatbot. Quick Slack's purpose is to save users' time by providing better search functionality and by suggesting generated responses to notifications.
 
 ### Tech Stack
 
-🚫 List all of the languages, frameworks, services, etc used here.
-
-### 2️⃣ Predictions
-
-🚫 Describe your models here
-
-### 2️⃣ Explanatory Variables
-
--   Explanatory Variable 1
--   Explanatory Variable 2
--   Explanatory Variable 3
--   Explanatory Variable 4
--   Explanatory Variable 5
-
-### Data Sources
-🚫  Add to or delete souce links as needed for your project
-
-
--   [Source 1] (🚫add link to python notebook here)
--   [Source 2] (🚫add link to python notebook here)
--   [Source 3] (🚫add link to python notebook here)
--   [Source 4] (🚫add link to python notebook here)
--   [Source 5] (🚫add link to python notebook here)
-
-### Python Notebooks
-
-🚫  Add to or delete python notebook links as needed for your project
-
-[Python Notebook 1](🚫add link to python notebook here)
-
-[Python Notebook 2](🚫add link to python notebook here)
-
-[Python Notebook 3](🚫add link to python notebook here)
-
-### 3️⃣ How to connect to the web API
-
-🚫 List directions on how to connect to the API here
-
-### 3️⃣ How to connect to the data API
-
-🚫 List directions on how to connect to the API here
+Annoy  
+Docker  
+HuggingFace  
+Postgres  
+Python  
+Pytorch  
+Rasa  
+Travis  
 
 ## Contributing
 
@@ -125,10 +62,4 @@ Remember that this project is licensed under the MIT license, and by submitting 
 ### Attribution
 
 These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
-
-## Documentation
-
-See [Backend Documentation](_link to your backend readme here_) for details on the backend of our project.
-
-See [Front End Documentation](_link to your front end readme here_) for details on the front end of our project.
 
