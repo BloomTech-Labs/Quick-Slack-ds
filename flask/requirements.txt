@@ -13,7 +13,7 @@ Click == 7.0
 Flask == 1.1.1
 
 # quickslack\app.py: 19
-PyYAML == 5.3
+PyYAML == 5.4
 
 # config\flask.py: 3
 # quickslack\app.py: 2
