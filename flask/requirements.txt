@@ -17,7 +17,7 @@ PyYAML == 5.3
 
 # config\flask.py: 3
 # quickslack\app.py: 2
-celery == 4.4.0
+celery == 5.2.2
 
 # quickslack\extensions.py: 1
 flask-debugtoolbar == 0.10.1
