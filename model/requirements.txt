@@ -34,4 +34,4 @@ psycopg2-binary==2.8.4
 
 sentence-transformers==0.2.5
 
-numpy==1.18.1
+numpy==1.22.0
