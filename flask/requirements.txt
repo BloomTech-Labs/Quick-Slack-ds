@@ -38,7 +38,7 @@ python-decouple == 3.3
 requests == 2.22.0
 
 # setup.py: 1
-setuptools == 41.4.0
+setuptools == 65.5.1
 
 # quickslack\routes\dashboard\forms.py: 4
 wtforms == 2.2.1
